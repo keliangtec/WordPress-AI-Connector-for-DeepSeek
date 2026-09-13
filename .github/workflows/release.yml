@@ -1,21 +1,16 @@
-name: CI
+name: Tagged Release
 
 on:
   push:
-  pull_request:
-  workflow_dispatch:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
 
 jobs:
-  quality:
-    name: PHP ${{ matrix.php-version }}
+  release:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version:
-          - '7.4'
-          - '8.4'
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -23,7 +18,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: '8.4'
           coverage: none
           tools: composer:v2
 
@@ -47,13 +42,24 @@ jobs:
 
       - name: Build plugin for Plugin Check
         run: |
-          version=$(sed -n 's/^ \* Version:[[:space:]]*//p' ai-connector-for-deepseek-guducat-ver.php | head -n 1)
-          bash bin/build-release.sh dist "v${version}"
+          bash bin/build-release.sh dist "${GITHUB_REF_NAME}"
           mkdir -p plugin-check
-          unzip -q "dist/ai-connector-for-deepseek-guducat-ver-v${version}.zip" -d plugin-check
+          unzip -q "dist/ai-connector-for-deepseek-guducat-ver-${GITHUB_REF_NAME}.zip" -d plugin-check
 
       - name: Run Plugin Check
         uses: wordpress/plugin-check-action@v1
         with:
           build-dir: './plugin-check/ai-connector-for-deepseek-guducat-ver'
           slug: ai-connector-for-deepseek-guducat-ver
+
+      - name: Build release archive
+        run: bash bin/build-release.sh dist "${GITHUB_REF_NAME}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/ai-connector-for-deepseek-guducat-ver-${{ github.ref_name }}.zip
+            dist/ai-connector-for-deepseek-guducat-ver-${{ github.ref_name }}.zip.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
