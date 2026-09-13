@@ -6,7 +6,7 @@
  *
  * Plugin Name:       AI Connector for DeepSeek Guducat.ver
  * Description:       Registers DeepSeek as a provider for the WordPress AI Client.
- * Version:           3.1.0
+ * Version:           3.1.1
  * Requires at least: 7.0
  * Requires PHP:      7.4
  * Author:            Guducat / 孤独豹猫
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-define( 'DEEPSEEK_AI_PROVIDER_VERSION', '3.1.0' );
+define( 'DEEPSEEK_AI_PROVIDER_VERSION', '3.1.1' );
 define( 'DEEPSEEK_AI_PROVIDER_DIR', plugin_dir_path( __FILE__ ) );
 
 $composer_autoload = DEEPSEEK_AI_PROVIDER_DIR . 'vendor/autoload.php';

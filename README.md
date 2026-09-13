@@ -4,7 +4,7 @@
 
 AI Connector for DeepSeek Guducat.ver registers DeepSeek as a provider for the WordPress AI Client.
 
-Current release: **3.1.0**.
+Current release: **3.1.1**.
 
 ## Capabilities
 
@@ -64,3 +64,10 @@ The plugin sends model-list requests and AI prompts to the DeepSeek API at `http
 ## Credits and license
 
 This project is based on the GPL-licensed **AI Provider For DeepSeek 1.0.3**, originally created by **Sajjad Hossain Sagor**. The original author's attribution is retained with thanks. The original project and this fork are distributed under **GPL-2.0-or-later**. See `NOTICE.md` and `license.txt` for details.
+
+## Roadmap
+
+- [x] Admin monitoring page
+- [ ] Anthropic protocol
+- [ ] OpenAI Responses protocol
+- [ ] Files API

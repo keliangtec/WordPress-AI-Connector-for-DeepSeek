@@ -157,6 +157,18 @@ if ( ! function_exists( 'wp_unslash' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wp_strip_all_tags' ) ) {
+	/**
+	 * Strip HTML and PHP tags from a string for isolated tests.
+	 *
+	 * @param string $text Text to sanitize.
+	 * @return string
+	 */
+	function wp_strip_all_tags( string $text ): string {
+		return trim( strip_tags( $text ) );
+	}
+}
+
 if ( ! function_exists( 'add_options_page' ) ) {
 	/**
 	 * Register a test settings page.

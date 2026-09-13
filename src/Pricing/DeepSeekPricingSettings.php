@@ -140,7 +140,7 @@ final class DeepSeekPricingSettings {
 			return '';
 		}
 
-		$value = trim( strip_tags( $value ) );
+		$value = trim( wp_strip_all_tags( $value ) );
 
 		return '' !== $value && strlen( $value ) <= 160 ? $value : '';
 	}
