@@ -40,7 +40,7 @@ final class PluginBootstrapTest extends TestCase {
 		$contents = file_get_contents( self::MAIN_FILE );
 		$this->assertIsString( $contents );
 		$this->assertStringContainsString( 'Plugin Name:       AI Connector for DeepSeek Guducat.ver', $contents );
-		$this->assertStringContainsString( 'Version:           0.2.0', $contents );
+		$this->assertStringContainsString( 'Version:           0.3.0', $contents );
 		$this->assertStringContainsString( 'Requires at least: 7.0', $contents );
 		$this->assertStringContainsString( 'Requires PHP:      7.4', $contents );
 		$this->assertMatchesRegularExpression( '/^[ \t]*\*[ \t]*Author:[ \t]+Guducat \/ 孤独豹猫[ \t]*$/m', $contents );
@@ -64,7 +64,14 @@ final class PluginBootstrapTest extends TestCase {
 			__DIR__ . '/../src/Admin/DeepSeekBalanceSection.php',
 			__DIR__ . '/../src/Admin/DeepSeekModelSettingsSection.php',
 			__DIR__ . '/../src/Admin/DeepSeekAdminPage.php',
+			__DIR__ . '/../src/Admin/DeepSeekPricingSection.php',
+			__DIR__ . '/../src/Admin/DeepSeekRequestLoggingStatus.php',
 			__DIR__ . '/../src/Balance/DeepSeekBalanceClient.php',
+			__DIR__ . '/../src/Observability/DeepSeekRequestLoggingIntegration.php',
+			__DIR__ . '/../src/Pricing/DeepSeekPricingCatalog.php',
+			__DIR__ . '/../src/Pricing/DeepSeekPricingRuleResolver.php',
+			__DIR__ . '/../src/Pricing/DeepSeekPricingSettings.php',
+			__DIR__ . '/../src/Pricing/DeepSeekUsageCostEstimator.php',
 			__DIR__ . '/../src/Models/DeepSeekModelSettings.php',
 			__DIR__ . '/../src/Metadata/DeepSeekModelMetadataDirectory.php',
 			__DIR__ . '/../src/Models/DeepSeekTextGenerationModel.php',
@@ -105,18 +112,22 @@ PHP;
 	 * Verify constants, autoloading, and hook registration.
 	 */
 	public function test_bootstrap_defines_constants_loads_provider_and_registers_init_hook(): void {
-		$this->assertSame( '0.2.0', constant( 'DEEPSEEK_AI_PROVIDER_VERSION' ) );
+		$this->assertSame( '0.3.0', constant( 'DEEPSEEK_AI_PROVIDER_VERSION' ) );
 		$this->assertSame( dirname( realpath( self::MAIN_FILE ) ) . DIRECTORY_SEPARATOR, constant( 'DEEPSEEK_AI_PROVIDER_DIR' ) );
 		$this->assertTrue( class_exists( DeepSeekProvider::class ) );
 
 		$actions = $GLOBALS['deepseek_ai_provider_test_actions'];
-		$this->assertCount( 2, $actions );
+		$this->assertCount( 4, $actions );
 		$this->assertSame( 'init', $actions[0]['hook_name'] );
 		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_provider', $actions[0]['callback'] );
 		$this->assertSame( 5, $actions[0]['priority'] );
-		$this->assertSame( 'admin_menu', $actions[1]['hook_name'] );
-		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_admin_pages', $actions[1]['callback'] );
-		$this->assertSame( 10, $actions[1]['priority'] );
+		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\load_textdomain', $actions[1]['callback'] );
+		$this->assertSame( 1, $actions[1]['priority'] );
+		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_request_logging_integration', $actions[2]['callback'] );
+		$this->assertSame( 6, $actions[2]['priority'] );
+		$this->assertSame( 'admin_menu', $actions[3]['hook_name'] );
+		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_admin_pages', $actions[3]['callback'] );
+		$this->assertSame( 10, $actions[3]['priority'] );
 	}
 
 	/**
@@ -175,6 +186,10 @@ namespace {
 		return rtrim( dirname( $file ), '/\\' ) . DIRECTORY_SEPARATOR;
 	}
 
+	function plugin_basename( string $file ): string {
+		return basename( dirname( $file ) ) . '/' . basename( $file );
+	}
+
 	function add_action( string $hook_name, callable $callback, int $priority = 10, int $accepted_args = 1 ): bool {
 		$GLOBALS['deepseek_admin_actions'][] = compact( 'hook_name', 'callback', 'priority', 'accepted_args' );
 		return true;
@@ -197,7 +212,7 @@ namespace {
 		exit( 2 );
 	}
 
-	$notice_action = $GLOBALS['deepseek_admin_actions'][2] ?? array();
+	$notice_action = $GLOBALS['deepseek_admin_actions'][4] ?? array();
 	if ( 'admin_notices' !== ( $notice_action['hook_name'] ?? null ) ) {
 		exit( 3 );
 	}

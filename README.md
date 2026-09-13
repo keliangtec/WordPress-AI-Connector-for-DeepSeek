@@ -13,6 +13,9 @@ AI Connector for DeepSeek Guducat.ver registers DeepSeek as a provider for the W
 - Uses the WordPress AI Client connector to manage the DeepSeek API key.
 - Adds a `DeepSeek Connector` administration page for `manage_options` users with click-to-query balance and model management.
 - Allows one experimental model fallback and explicit text/text + image capability overrides.
+- Detects whether WordPress AI Request Logging is active and links administrators to its settings and existing request-log screen.
+- Enriches DeepSeek Chat Completions log details with cache usage, reasoning tokens, and an estimated cost based on versioned pricing rules.
+- Includes historical built-in CNY pricing rules and lets administrators add or override rules before the next plugin update.
 
 The plugin does not currently provide a WordPress Media Library UI, an upload workflow, Files API integration, image `detail` controls, or DeepSeek Responses API support. Generation requests are currently fixed to the OpenAI-compatible Chat Completions endpoint. The plugin does not upload images independently of the WordPress PHP AI Client.
 
@@ -29,6 +32,8 @@ The plugin does not currently provide a WordPress Media Library UI, an upload wo
 3. Configure the DeepSeek connector through the WordPress AI Client.
 
 The management page is available under **Settings > DeepSeek Connector**. It is administrator-only and does not query DeepSeek when the page is merely opened. The request uses the authentication object already registered in the WordPress AI Client; the API key and `Authorization` header are never sent to the browser.
+
+Request history remains owned by the WordPress AI plugin. Enable **AI Request Logging** in the WordPress AI settings to record requests, then use **Tools > AI Request Logs** to inspect them. This connector does not create a second log table. Estimated costs are stored with the price snapshot used at request time, so later pricing changes do not alter old entries. Estimates are informational and may differ from the provider invoice.
 
 ## Image input
 

@@ -53,6 +53,56 @@ if ( ! function_exists( 'add_action' ) ) {
 	}
 }
 
+if ( ! function_exists( 'add_filter' ) ) {
+	/**
+	 * Register a WordPress filter callback for isolated tests.
+	 *
+	 * @param string   $hook_name     Filter name.
+	 * @param callable $callback      Filter callback.
+	 * @param int      $priority      Callback priority.
+	 * @param int      $accepted_args Number of accepted arguments.
+	 * @return bool
+	 */
+	function add_filter( string $hook_name, callable $callback, int $priority = 10, int $accepted_args = 1 ): bool {
+		$GLOBALS['deepseek_test_filters'][] = array(
+			'hook_name'     => $hook_name,
+			'callback'      => $callback,
+			'priority'      => $priority,
+			'accepted_args' => $accepted_args,
+		);
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'apply_filters' ) ) {
+	/**
+	 * Apply isolated test filters for a hook.
+	 *
+	 * @param string $hook_name Filter name.
+	 * @param mixed  $value     Initial value.
+	 * @param mixed  ...$args   Additional arguments.
+	 * @return mixed
+	 */
+	function apply_filters( string $hook_name, $value, ...$args ) {
+		$filters = $GLOBALS['deepseek_test_filters'] ?? array();
+		usort(
+			$filters,
+			static function ( array $left, array $right ): int {
+				return $left['priority'] <=> $right['priority'];
+			}
+		);
+		foreach ( $filters as $filter ) {
+			if ( $hook_name !== $filter['hook_name'] ) {
+				continue;
+			}
+			$arguments = array_slice( array_merge( array( $value ), $args ), 0, $filter['accepted_args'] );
+			$value     = $filter['callback']( ...$arguments );
+		}
+		return $value;
+	}
+}
+
 if ( ! function_exists( 'current_user_can' ) ) {
 	/**
 	 * Return the test user's administrator capability.
@@ -182,6 +232,20 @@ if ( ! function_exists( 'esc_attr' ) ) {
 	}
 }
 
+if ( ! function_exists( 'esc_attr__' ) ) {
+	/**
+	 * Return an escaped untranslated test attribute.
+	 *
+	 * @param string $text   Value.
+	 * @param string $domain Text domain.
+	 * @return string
+	 */
+	function esc_attr__( string $text, string $domain = '' ): string {
+		unset( $domain );
+		return esc_attr( $text );
+	}
+}
+
 if ( ! function_exists( 'esc_url' ) ) {
 	/**
 	 * Escape a test URL.
@@ -203,6 +267,64 @@ if ( ! function_exists( 'admin_url' ) ) {
 	 */
 	function admin_url( string $path = '' ): string {
 		return '/wp-admin/' . ltrim( $path, '/' );
+	}
+}
+
+if ( ! function_exists( 'plugin_basename' ) ) {
+	/**
+	 * Return a stable test plugin basename.
+	 *
+	 * @param string $file Plugin file.
+	 * @return string
+	 */
+	function plugin_basename( string $file ): string {
+		return basename( dirname( $file ) ) . '/' . basename( $file );
+	}
+}
+
+if ( ! function_exists( 'load_plugin_textdomain' ) ) {
+	/**
+	 * Record text domain loading in tests.
+	 *
+	 * @param string $domain          Text domain.
+	 * @param bool   $deprecated      Deprecated argument.
+	 * @param string $plugin_rel_path Relative language path.
+	 * @return bool
+	 */
+	function load_plugin_textdomain( string $domain, bool $deprecated = false, string $plugin_rel_path = '' ): bool {
+		$GLOBALS['deepseek_test_textdomain'] = compact( 'domain', 'deprecated', 'plugin_rel_path' );
+		unset( $domain, $deprecated, $plugin_rel_path );
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_enqueue_style' ) ) {
+	/**
+	 * Record enqueued styles in tests.
+	 *
+	 * @param string       $handle       Style handle.
+	 * @param string       $source       Style URL.
+	 * @param array<mixed> $dependencies Style dependencies.
+	 * @param mixed        $version      Style version.
+	 * @return void
+	 */
+	function wp_enqueue_style( string $handle, string $source, array $dependencies = array(), $version = false ): void {
+		$GLOBALS['deepseek_test_styles'][] = compact( 'handle', 'source', 'dependencies', 'version' );
+		unset( $handle, $source, $dependencies, $version );
+	}
+}
+
+if ( ! function_exists( 'plugins_url' ) ) {
+	/**
+	 * Return a deterministic test plugin URL.
+	 *
+	 * @param string $path   Relative path.
+	 * @param string $plugin Plugin file.
+	 * @return string
+	 */
+	function plugins_url( string $path = '', string $plugin = '' ): string {
+		unset( $plugin );
+		return '/wp-content/plugins/ai-connector-for-deepseek-guducat-ver/' . ltrim( $path, '/' );
 	}
 }
 

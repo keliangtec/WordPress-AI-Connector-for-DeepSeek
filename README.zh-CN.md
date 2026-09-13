@@ -13,6 +13,9 @@ AI Connector for DeepSeek Guducat.ver 将 DeepSeek 注册为 WordPress AI Client
 - 由 WordPress AI Client connector 管理 DeepSeek API key。
 - 为具有 `manage_options` 权限的用户提供 `DeepSeek Connector` 管理页面，支持点击查询余额和模型管理。
 - 允许配置一个实验性模型兜底，并明确选择仅文本或文本 + 图片能力。
+- 检测 WordPress AI 的 `AI Request Logging` 是否实际启用，并引导管理员进入其设置页和既有请求日志页面。
+- 为 DeepSeek Chat Completions 日志详情补充缓存用量、推理 token 和基于版本化价目规则的估算费用。
+- 内置历史人民币价目规则，并允许管理员在插件更新前自行添加或覆盖新规则。
 
 本插件当前不提供 WordPress 媒体库 UI、上传流程、Files API 集成、图片 `detail` 控制或 DeepSeek Responses API 支持。生成请求当前固定使用 OpenAI 兼容的 Chat Completions 端点。本插件不会绕过 WordPress PHP AI Client 独立上传图片。
 
@@ -29,6 +32,8 @@ AI Connector for DeepSeek Guducat.ver 将 DeepSeek 注册为 WordPress AI Client
 3. 通过 WordPress AI Client 配置 DeepSeek connector。
 
 管理页面位于 **设置 > DeepSeek Connector**。该页面仅管理员可访问，打开页面本身不会查询 DeepSeek。查询使用 WordPress AI Client 已注册的运行时认证对象；API key 和 `Authorization` 请求头不会发送到浏览器。
+
+请求历史仍由 WordPress AI 插件统一管理。请先在 WordPress AI 设置中启用 **AI Request Logging**，再通过 **工具 > AI Request Logs** 查看记录。本插件不会创建第二张日志表。每次估算都会把当时使用的价格快照写入日志，因此后续改价不会改变旧记录；估算仅供参考，可能与 DeepSeek 实际账单不同。
 
 ## 图片输入
 
@@ -54,3 +59,9 @@ CI 覆盖最低支持的 PHP 7.4 和生产目标 PHP 8.4。
 ## 致谢与许可证
 
 本项目基于 **Sajjad Hossain Sagor** 原始创建的 GPL 许可插件 **AI Provider For DeepSeek 1.0.3**。本项目保留并感谢原作者的贡献。原项目和本 fork 均以 **GPL-2.0-or-later** 许可证发布。详见 `NOTICE.md` 和 `license.txt`。
+
+## 路线图
+[x] 管理监控页面
+[ ] Anthropic协议
+[ ] OpenAI Response协议
+[ ] Files API

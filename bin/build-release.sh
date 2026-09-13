@@ -33,6 +33,10 @@ copy_file license.txt
 copy_file uninstall.php
 copy_file index.php
 copy_file assets/images/deepseek.svg
+if [[ -f assets/css/admin.css ]]; then copy_file assets/css/admin.css; fi
+if [[ -d languages ]]; then
+  find languages -type f \( -name '*.pot' -o -name '*.po' -o -name '*.mo' \) -print0 | while IFS= read -r -d '' file; do copy_file "$file"; done
+fi
 find src -type f -name '*.php' -print0 | while IFS= read -r -d '' file; do copy_file "$file"; done
 
 (cd "$output_dir" && zip -qr "${plugin_slug}-v${version}.zip" "$plugin_slug")

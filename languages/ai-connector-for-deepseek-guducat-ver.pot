@@ -1,0 +1,328 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Guducat
+# This file is distributed under the same license as the AI Connector for DeepSeek Guducat.ver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Connector for DeepSeek Guducat.ver 0.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-13 18:10+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Admin/DeepSeekAdminPage.php:32 src/Admin/DeepSeekAdminPage.php:33
+#: src/Admin/DeepSeekAdminPage.php:75
+msgid "DeepSeek Connector"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:76
+msgid ""
+"Manage DeepSeek request observability, account balance, and model "
+"capabilities."
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:80
+msgid "AI Request Logging"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:85
+msgid "Account balance"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:86
+msgid "Balance is queried only after an explicit refresh."
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:87 src/Admin/DeepSeekBalancePage.php:119
+msgid "Refresh balance"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:91 src/Admin/DeepSeekPricingSection.php:107
+msgid "Pricing rules"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:112
+msgid "Enabled"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:112
+msgid "WordPress AI is recording requests for observability and debugging."
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:114
+msgid "View AI Request Logs"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:122 src/Admin/DeepSeekPricingSection.php:121
+msgid "Disabled"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:122
+msgid ""
+"Enable the experimental AI Request Logging feature in WordPress AI settings "
+"to record requests."
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:124
+msgid "Open AI Settings"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:130
+msgid "WordPress AI unavailable"
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:130
+msgid "Install and activate the WordPress AI plugin to use AI Request Logging."
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:142
+msgid "DeepSeek connector tools are available here."
+msgstr ""
+
+#: src/Admin/DeepSeekAdminPage.php:142
+msgid "Open DeepSeek Connector"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:53 src/Admin/DeepSeekBalancePage.php:54
+#: src/Admin/DeepSeekBalancePage.php:114
+msgid "DeepSeek Balance"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:115
+msgid "The balance is queried only when you click the refresh button."
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:139
+msgid "DeepSeek account balance is available on the provider status page."
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:141
+msgid "View balance"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:178
+msgid ""
+"The DeepSeek balance could not be loaded. Check the connector configuration "
+"and try again."
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:193
+msgid "Available for API calls"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:194
+msgid "Not available for API calls"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:197
+#: src/Admin/DeepSeekPricingSection.php:139
+msgid "Currency"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:198
+msgid "Total balance"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:199
+msgid "Granted balance"
+msgstr ""
+
+#: src/Admin/DeepSeekBalancePage.php:200
+msgid "Topped-up balance"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:124
+msgid "Model management"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:125
+msgid ""
+"Refresh the remote list only when needed. Unknown models default to text "
+"input."
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:129
+msgid "Refresh model list"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:134
+msgid "Remote model"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:134
+msgid "Input capability"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:139
+msgid "Plugin default"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:139
+msgid "Text only"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:139
+msgid "Text + image"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:142
+msgid "One experimental model ID"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:143
+msgid "Experimental: text only"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:143
+msgid "Experimental: text + image"
+msgstr ""
+
+#: src/Admin/DeepSeekModelSettingsSection.php:144
+msgid "Save model settings"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:40
+msgid "Permission denied."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:57
+msgid "Custom pricing rule disabled."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:64
+msgid "Unknown pricing action."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:73
+msgid "The pricing rule is invalid."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:91
+msgid "Custom pricing rule saved."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:108
+msgid ""
+"Estimated costs use the rule effective when the request is logged. Custom "
+"rules override built-in rules with the same effective time."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:110
+msgid "Effective (UTC)"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:110
+msgid "Model"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:110
+msgid "Rates per 1M tokens"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:110
+msgid "Source"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:117
+msgid "Custom"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:117
+msgid "Built-in"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:123
+msgid "Disable"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:130
+msgid "Add or replace a custom pricing rule"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:131
+msgid ""
+"Use exact API model IDs separated by commas. Effective times and peak "
+"windows use UTC."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:135
+msgid "Rule ID"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:136
+msgid "Label"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:137
+msgid "Model IDs"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:138
+msgid "Effective from (UTC)"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:140
+msgid "Pricing mode"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:140
+#: src/Admin/DeepSeekPricingSection.php:141
+msgid "Flat rate"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:140
+msgid "Off-peak and peak rates"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:143
+#: src/Admin/DeepSeekPricingSection.php:149
+#: src/Admin/DeepSeekPricingSection.php:155
+msgid "Cache hit input"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:144
+#: src/Admin/DeepSeekPricingSection.php:150
+#: src/Admin/DeepSeekPricingSection.php:156
+msgid "Cache miss input"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:145
+#: src/Admin/DeepSeekPricingSection.php:151
+#: src/Admin/DeepSeekPricingSection.php:157
+msgid "Output"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:147
+msgid "Off-peak rates"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:153
+msgid "Peak rates"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:159
+msgid "Peak weekdays"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:159
+msgid "ISO weekday numbers, Monday is 1."
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:160
+msgid "Peak windows (UTC)"
+msgstr ""
+
+#: src/Admin/DeepSeekPricingSection.php:161
+msgid "Save custom pricing rule"
+msgstr ""
+
+#: src/Provider/DeepSeekProvider.php:94
+msgid "Text generation with DeepSeek AI models."
+msgstr ""

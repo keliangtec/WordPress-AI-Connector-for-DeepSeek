@@ -2,7 +2,7 @@
 Contributors: sajjad67
 Tags: ai, deepseek, artificial-intelligence, connector
 Requires at least: 7.0
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,8 @@ Features:
 * API key management through the WordPress AI Client connector system.
 * Administrator-only connector page under Settings > DeepSeek Connector with click-to-query balance and model capability management.
 * One configurable experimental model can be added as a local fallback, with administrator-selected text or text + image input.
+* Read-only detection and guidance for the WordPress AI Request Logging experiment.
+* DeepSeek request-log enrichment with cache usage, reasoning tokens, and estimated costs using versioned built-in or administrator-defined pricing rules.
 
 This plugin does not currently provide a Media Library UI, an upload workflow, Files API integration, image `detail` controls, or DeepSeek Responses API support. Generation requests are currently fixed to the OpenAI-compatible Chat Completions endpoint. The plugin does not upload images independently of the WordPress PHP AI Client.
 
@@ -36,6 +38,8 @@ Requirements:
 1. Upload the plugin directory to `/wp-content/plugins/`.
 2. Activate AI Connector for DeepSeek Guducat.ver.
 3. Configure DeepSeek through the WordPress AI Client connector.
+
+Enable AI Request Logging in the WordPress AI settings to record requests. Logs remain on the existing Tools > AI Request Logs screen; this connector does not create a separate request-history table. Cost values are estimates stored with the pricing snapshot used for each request and may differ from the provider invoice.
 
 == Frequently Asked Questions ==
 
@@ -60,6 +64,12 @@ Service provider: DeepSeek
 Based on the GPL-licensed AI Provider For DeepSeek 1.0.3, originally created by Sajjad Hossain Sagor. The original author's attribution and contribution are retained with thanks. Guducat / 孤独豹猫 is the current maintainer of this fork. The original project and this fork are distributed under GPL-2.0-or-later. See NOTICE.md and license.txt for details.
 
 == Changelog ==
+
+= 0.3.0 =
+
+* Added WordPress AI Request Logging status guidance and DeepSeek request cost estimation.
+* Added versioned built-in and administrator-defined pricing rules.
+* Added English and Simplified Chinese administration translations.
 
 = 0.2.0 =
 

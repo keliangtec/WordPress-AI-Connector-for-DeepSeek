@@ -6,13 +6,14 @@
  *
  * Plugin Name:       AI Connector for DeepSeek Guducat.ver
  * Description:       Registers DeepSeek as a provider for the WordPress AI Client.
- * Version:           0.2.0
+ * Version:           0.3.0
  * Requires at least: 7.0
  * Requires PHP:      7.4
  * Author:            Guducat / 孤独豹猫
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       ai-connector-for-deepseek-guducat-ver
+ * Domain Path:       /languages
  */
 
 declare(strict_types=1);
@@ -20,6 +21,11 @@ declare(strict_types=1);
 namespace Guducat\DeepSeekAiProvider;
 
 use Guducat\DeepSeekAiProvider\Admin\DeepSeekAdminPage;
+use Guducat\DeepSeekAiProvider\Observability\DeepSeekRequestLoggingIntegration;
+use Guducat\DeepSeekAiProvider\Pricing\DeepSeekPricingCatalog;
+use Guducat\DeepSeekAiProvider\Pricing\DeepSeekPricingRuleResolver;
+use Guducat\DeepSeekAiProvider\Pricing\DeepSeekPricingSettings;
+use Guducat\DeepSeekAiProvider\Pricing\DeepSeekUsageCostEstimator;
 use Guducat\DeepSeekAiProvider\Provider\DeepSeekProvider;
 use WordPress\AiClient\AiClient;
 
@@ -27,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-define( 'DEEPSEEK_AI_PROVIDER_VERSION', '0.2.0' );
+define( 'DEEPSEEK_AI_PROVIDER_VERSION', '0.3.0' );
 define( 'DEEPSEEK_AI_PROVIDER_DIR', plugin_dir_path( __FILE__ ) );
 
 $composer_autoload = DEEPSEEK_AI_PROVIDER_DIR . 'vendor/autoload.php';
@@ -72,6 +78,27 @@ function register_provider(): void {
 }
 
 add_action( 'init', __NAMESPACE__ . '\\register_provider', 5 );
+
+/** Load Connector translations for the current WordPress user locale. */
+function load_textdomain(): void {
+	load_plugin_textdomain(
+		'ai-connector-for-deepseek-guducat-ver',
+		false,
+		dirname( plugin_basename( __FILE__ ) ) . '/languages'
+	);
+}
+
+add_action( 'init', __NAMESPACE__ . '\\load_textdomain', 1 );
+
+/** Register optional DeepSeek enrichments for WordPress AI request logs. */
+function register_request_logging_integration(): void {
+	$rules       = DeepSeekPricingCatalog::merge( DeepSeekPricingSettings::get() );
+	$estimator   = new DeepSeekUsageCostEstimator( new DeepSeekPricingRuleResolver(), $rules );
+	$integration = new DeepSeekRequestLoggingIntegration( $estimator );
+	$integration->register();
+}
+
+add_action( 'init', __NAMESPACE__ . '\\register_request_logging_integration', 6 );
 
 /**
  * Register the DeepSeek administration page.
