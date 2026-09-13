@@ -1,17 +1,17 @@
-=== DeepSeek AI Provider for WordPress ===
+=== AI Connector for DeepSeek Guducat.ver ===
 Contributors: sajjad67
 Tags: ai, deepseek, artificial-intelligence, connector
 Requires at least: 7.0
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Registers DeepSeek as a provider for the WordPress AI Client.
+Registers DeepSeek as a provider for the WordPress AI Client and provides administrator model management tools.
 
 == Description ==
 
-DeepSeek AI Provider for WordPress registers DeepSeek with the WordPress AI Client included in WordPress 7.x.
+AI Connector for DeepSeek Guducat.ver registers DeepSeek with the WordPress AI Client included in WordPress 7.x.
 
 Features:
 
@@ -20,6 +20,8 @@ Features:
 * Text and image input are advertised only for the exact, case-sensitive model ID `deepseek-flash`; every other current or unknown model defaults to text-only input.
 * Remote URL and `data:` URI image inputs are passed through the WordPress PHP AI Client to the OpenAI-compatible Chat Completions endpoint.
 * API key management through the WordPress AI Client connector system.
+* Administrator-only connector page under Settings > DeepSeek Connector with click-to-query balance and model capability management.
+* One configurable experimental model can be added as a local fallback, with administrator-selected text or text + image input.
 
 This plugin does not currently provide a Media Library UI, an upload workflow, Files API integration, image `detail` controls, or DeepSeek Responses API support. Generation requests are currently fixed to the OpenAI-compatible Chat Completions endpoint. The plugin does not upload images independently of the WordPress PHP AI Client.
 
@@ -32,7 +34,7 @@ Requirements:
 == Installation ==
 
 1. Upload the plugin directory to `/wp-content/plugins/`.
-2. Activate DeepSeek AI Provider for WordPress.
+2. Activate AI Connector for DeepSeek Guducat.ver.
 3. Configure DeepSeek through the WordPress AI Client connector.
 
 == Frequently Asked Questions ==
@@ -43,9 +45,9 @@ Create an API key through the DeepSeek Platform.
 
 == External Services ==
 
-This plugin connects to the DeepSeek API at `https://api.deepseek.com/v1` to discover models and process AI prompts. The API key managed by WordPress and prompt content supplied for processing are sent to DeepSeek when these features are used.
+This plugin connects to the DeepSeek API at `https://api.deepseek.com/v1` to discover models and process AI prompts. When an administrator explicitly refreshes the balance on the DeepSeek Connector page, it also sends an authenticated request to `https://api.deepseek.com/user/balance`. The API key managed by WordPress and prompt content supplied for processing are sent to DeepSeek when these features are used.
 
-Model discovery uses `GET /v1/models`. Generation requests use the OpenAI-compatible Chat Completions endpoint. When the WordPress PHP AI Client supplies image inputs as remote URLs or `data:` URIs, those values are included in the request. The plugin does not provide a separate image uploader, Media Library UI, Files API integration, or image `detail` control.
+Model discovery uses `GET /v1/models`. Generation requests use the OpenAI-compatible Chat Completions endpoint. Balance requests use `GET /user/balance` and are limited to administrators with `manage_options`, a valid WordPress nonce, and an explicit refresh submission on the DeepSeek Connector page. When the WordPress PHP AI Client supplies image inputs as remote URLs or `data:` URIs, those values are included in the request. The plugin does not provide a separate image uploader, Media Library UI, Files API integration, or image `detail` control. The API key, `Authorization` header, and raw provider error details are handled server-side and are not rendered in the browser.
 
 Service provider: DeepSeek
 
@@ -58,6 +60,15 @@ Service provider: DeepSeek
 Based on the GPL-licensed AI Provider For DeepSeek 1.0.3, originally created by Sajjad Hossain Sagor. The original author's attribution and contribution are retained with thanks. Guducat / 孤独豹猫 is the current maintainer of this fork. The original project and this fork are distributed under GPL-2.0-or-later. See NOTICE.md and license.txt for details.
 
 == Changelog ==
+
+= 0.2.0 =
+
+* Added the DeepSeek Connector management page with model capability overrides and one experimental model fallback.
+
+= 0.1.5 =
+
+* Renamed the plugin to AI Connector for DeepSeek Guducat.ver.
+* Added administrator-only, click-to-query DeepSeek balance lookup.
 
 = 0.1.0 =
 

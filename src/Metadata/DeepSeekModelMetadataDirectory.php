@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Guducat\DeepSeekAiProvider\Metadata;
 
+use Guducat\DeepSeekAiProvider\Models\DeepSeekModelSettings;
 use Guducat\DeepSeekAiProvider\Provider\DeepSeekProvider;
 use WordPress\AiClient\Messages\Enums\ModalityEnum;
 use WordPress\AiClient\Providers\Http\DTO\Request;
@@ -22,6 +23,10 @@ use WordPress\AiClient\Providers\Models\DTO\SupportedOption;
 use WordPress\AiClient\Providers\Models\Enums\CapabilityEnum;
 use WordPress\AiClient\Providers\Models\Enums\OptionEnum;
 use WordPress\AiClient\Providers\OpenAiCompatibleImplementation\AbstractOpenAiCompatibleModelMetadataDirectory;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
 
 /**
  * Class for the model metadata directory used by the provider for DeepSeek.
@@ -88,13 +93,24 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 
 		$models = array_map(
 			static function ( array $model_data ) use ( $base_text_options ): ModelMetadata {
-				$model_id = (string) $model_data['id'];
-				$options  = array_merge(
+				$model_id         = (string) $model_data['id'];
+				$input_modalities = self::inputModalitiesForModel( $model_id );
+				$settings         = DeepSeekModelSettings::get();
+				$input_mode       = $settings['overrides'][ $model_id ] ?? null;
+				if ( null === $input_mode && $settings['experimental_model']['id'] === $model_id ) {
+					$input_mode = $settings['experimental_model']['input_mode'];
+				}
+				if ( DeepSeekModelSettings::INPUT_TEXT === $input_mode ) {
+					$input_modalities = array( ModalityEnum::text() );
+				} elseif ( DeepSeekModelSettings::INPUT_TEXT_IMAGE === $input_mode ) {
+					$input_modalities = array( ModalityEnum::text(), ModalityEnum::image() );
+				}
+				$options = array_merge(
 					$base_text_options,
 					array(
 						new SupportedOption(
 							OptionEnum::inputModalities(),
-							array( self::inputModalitiesForModel( $model_id ) )
+							array( $input_modalities )
 						),
 					)
 				);
@@ -112,6 +128,73 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 		usort( $models, array( $this, 'modelSortCallback' ) );
 
 		return $models;
+	}
+
+	/**
+	 * Refresh and return only the models reported by DeepSeek.
+	 *
+	 * @return list<string> Normalized remote model IDs.
+	 */
+	public function refreshRemoteModelIds(): array {
+		$this->invalidateCaches();
+		$remote_models = array_keys( parent::sendListModelsRequest() );
+		$remote_models = array_values( array_unique( array_filter( $remote_models, array( DeepSeekModelSettings::class, 'is_valid_model_id' ) ) ) );
+		usort( $remote_models, 'strcmp' );
+
+		$settings                  = DeepSeekModelSettings::get();
+		$settings['remote_models'] = $remote_models;
+		DeepSeekModelSettings::save( $settings );
+		$this->invalidateCaches();
+
+		return $remote_models;
+	}
+
+	/**
+	 * Include the configured experimental model in normal runtime discovery.
+	 *
+	 * @return array<string, ModelMetadata> Model metadata keyed by model ID.
+	 */
+	protected function sendListModelsRequest(): array {
+		$models       = parent::sendListModelsRequest();
+		$settings     = DeepSeekModelSettings::get();
+		$experimental = $settings['experimental_model'];
+
+		if ( '' !== $experimental['id'] && ! isset( $models[ $experimental['id'] ] ) ) {
+			$models[ $experimental['id'] ] = self::createModelMetadata( $experimental['id'], $experimental['input_mode'] );
+		}
+
+		return $models;
+	}
+
+	/**
+	 * Build one model metadata object using the configured capability.
+	 *
+	 * @param string $model_id   Model ID.
+	 * @param string $input_mode Input mode.
+	 * @return ModelMetadata Model metadata.
+	 */
+	private static function createModelMetadata( string $model_id, string $input_mode ): ModelMetadata {
+		$modalities = DeepSeekModelSettings::INPUT_TEXT_IMAGE === $input_mode
+			? array( ModalityEnum::text(), ModalityEnum::image() )
+			: array( ModalityEnum::text() );
+
+		return new ModelMetadata(
+			$model_id,
+			self::formatDisplayName( $model_id ),
+			array( CapabilityEnum::textGeneration(), CapabilityEnum::chatHistory() ),
+			array(
+				new SupportedOption( OptionEnum::systemInstruction() ),
+				new SupportedOption( OptionEnum::functionDeclarations() ),
+				new SupportedOption( OptionEnum::maxTokens() ),
+				new SupportedOption( OptionEnum::temperature() ),
+				new SupportedOption( OptionEnum::topP() ),
+				new SupportedOption( OptionEnum::stopSequences() ),
+				new SupportedOption( OptionEnum::outputMimeType(), array( 'text/plain', 'application/json' ) ),
+				new SupportedOption( OptionEnum::customOptions() ),
+				new SupportedOption( OptionEnum::outputModalities(), array( array( ModalityEnum::text() ) ) ),
+				new SupportedOption( OptionEnum::inputModalities(), array( $modalities ) ),
+			)
+		);
 	}
 
 	/**

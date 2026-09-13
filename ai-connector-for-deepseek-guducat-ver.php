@@ -4,21 +4,22 @@
  *
  * @package Guducat\DeepSeekAiProvider
  *
- * Plugin Name:       DeepSeek AI Provider for WordPress
+ * Plugin Name:       AI Connector for DeepSeek Guducat.ver
  * Description:       Registers DeepSeek as a provider for the WordPress AI Client.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Requires at least: 7.0
  * Requires PHP:      7.4
  * Author:            Guducat / 孤独豹猫
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       deepseek-ai-provider
+ * Text Domain:       ai-connector-for-deepseek-guducat-ver
  */
 
 declare(strict_types=1);
 
 namespace Guducat\DeepSeekAiProvider;
 
+use Guducat\DeepSeekAiProvider\Admin\DeepSeekAdminPage;
 use Guducat\DeepSeekAiProvider\Provider\DeepSeekProvider;
 use WordPress\AiClient\AiClient;
 
@@ -26,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-define( 'DEEPSEEK_AI_PROVIDER_VERSION', '0.1.0' );
+define( 'DEEPSEEK_AI_PROVIDER_VERSION', '0.2.0' );
 define( 'DEEPSEEK_AI_PROVIDER_DIR', plugin_dir_path( __FILE__ ) );
 
 $composer_autoload = DEEPSEEK_AI_PROVIDER_DIR . 'vendor/autoload.php';
@@ -71,3 +72,15 @@ function register_provider(): void {
 }
 
 add_action( 'init', __NAMESPACE__ . '\\register_provider', 5 );
+
+/**
+ * Register the DeepSeek administration page.
+ *
+ * @since 0.1.0
+ * @return void
+ */
+function register_admin_pages(): void {
+	( new DeepSeekAdminPage() )->register();
+}
+
+add_action( 'admin_menu', __NAMESPACE__ . '\\register_admin_pages' );

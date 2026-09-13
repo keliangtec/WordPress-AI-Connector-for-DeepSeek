@@ -10,6 +10,7 @@
 
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/docs/*</exclude-pattern>
+    <exclude-pattern>*/dist/*</exclude-pattern>
 
     <config name="testVersion" value="7.4-"/>
 

@@ -1,6 +1,6 @@
 {
-    "name": "guducat/deepseek-ai-provider",
-    "description": "DeepSeek AI provider for WordPress.",
+    "name": "guducat/ai-connector-for-deepseek-guducat-ver",
+    "description": "AI Connector for DeepSeek Guducat.ver for WordPress.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [

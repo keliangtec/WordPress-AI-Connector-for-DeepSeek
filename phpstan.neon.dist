@@ -2,7 +2,7 @@ parameters:
     level: 6
     treatPhpDocTypesAsCertain: false
     paths:
-        - deepseek-ai-provider.php
+        - ai-connector-for-deepseek-guducat-ver.php
         - src
         - tests
     bootstrapFiles:

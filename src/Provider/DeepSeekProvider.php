@@ -25,6 +25,10 @@ use WordPress\AiClient\Providers\Http\Enums\RequestAuthenticationMethod;
 use WordPress\AiClient\Providers\Models\Contracts\ModelInterface;
 use WordPress\AiClient\Providers\Models\DTO\ModelMetadata;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die;
+}
+
 /**
  * Class for the WordPress AI Client provider for DeepSeek.
  *
@@ -87,7 +91,7 @@ class DeepSeekProvider extends AbstractApiProvider {
 		if ( version_compare( $ai_client_version, '1.2.0', '>=' ) ) {
 			// For WordPress, we should translate the description.
 			if ( function_exists( '__' ) ) {
-				$provider_metadata_args[] = __( 'Text generation with DeepSeek AI models.', 'deepseek-ai-provider' );
+				$provider_metadata_args[] = __( 'Text generation with DeepSeek AI models.', 'ai-connector-for-deepseek-guducat-ver' );
 			} else {
 				$provider_metadata_args[] = 'Text generation with DeepSeek AI models.';
 			}

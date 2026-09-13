@@ -1,8 +1,8 @@
 [English](README.md)
 
-# DeepSeek AI Provider for WordPress
+# AI Connector for DeepSeek Guducat.ver
 
-DeepSeek AI Provider for WordPress 将 DeepSeek 注册为 WordPress AI Client 的提供商。
+AI Connector for DeepSeek Guducat.ver 将 DeepSeek 注册为 WordPress AI Client 的提供商。
 
 ## 功能
 
@@ -11,6 +11,8 @@ DeepSeek AI Provider for WordPress 将 DeepSeek 注册为 WordPress AI Client �
 - 仅对精确且区分大小写的模型 ID `deepseek-flash` 声明支持文本和图片输入。其他当前模型及任何未知的未来模型默认仅支持文本输入。
 - 将远程 URL 或 `data:` URI 形式的图片输入经 WordPress PHP AI Client 传给 DeepSeek 的 OpenAI 兼容 Chat Completions 端点。
 - 由 WordPress AI Client connector 管理 DeepSeek API key。
+- 为具有 `manage_options` 权限的用户提供 `DeepSeek Connector` 管理页面，支持点击查询余额和模型管理。
+- 允许配置一个实验性模型兜底，并明确选择仅文本或文本 + 图片能力。
 
 本插件当前不提供 WordPress 媒体库 UI、上传流程、Files API 集成、图片 `detail` 控制或 DeepSeek Responses API 支持。生成请求当前固定使用 OpenAI 兼容的 Chat Completions 端点。本插件不会绕过 WordPress PHP AI Client 独立上传图片。
 
@@ -23,8 +25,10 @@ DeepSeek AI Provider for WordPress 将 DeepSeek 注册为 WordPress AI Client �
 ## 安装
 
 1. 将插件目录放入 `wp-content/plugins/`。
-2. 启用 **DeepSeek AI Provider for WordPress**。
+2. 启用 **AI Connector for DeepSeek Guducat.ver**。
 3. 通过 WordPress AI Client 配置 DeepSeek connector。
+
+管理页面位于 **设置 > DeepSeek Connector**。该页面仅管理员可访问，打开页面本身不会查询 DeepSeek。查询使用 WordPress AI Client 已注册的运行时认证对象；API key 和 `Authorization` 请求头不会发送到浏览器。
 
 ## 图片输入
 
@@ -45,7 +49,7 @@ CI 覆盖最低支持的 PHP 7.4 和生产目标 PHP 8.4。
 
 ## 外部服务
 
-本插件会将模型列表请求和 AI 提示发送到 `https://api.deepseek.com/v1` 下的 DeepSeek API。模型发现使用 `GET /v1/models`；生成请求使用 OpenAI 兼容的 Chat Completions 端点。请求包含 WordPress AI Client connector 管理的 API key 和用于处理的提示内容；存在图片 URL 或 data URI 时，这些值也会被发送。DeepSeek 的条款和隐私政策适用于该服务处理的数据。
+本插件会将模型列表请求和 AI 提示发送到 `https://api.deepseek.com/v1` 下的 DeepSeek API。模型发现使用 `GET /v1/models`；生成请求使用 OpenAI 兼容的 Chat Completions 端点。管理员在管理页面明确点击刷新余额后，插件还会发送独立的认证请求 `GET https://api.deepseek.com/user/balance`。请求包含 WordPress AI Client connector 管理的 API key 和用于处理的提示内容；存在图片 URL 或 data URI 时，这些值也会被发送。余额响应和 provider 错误在服务端处理；API key、`Authorization` 请求头和上游原始错误细节不会输出到浏览器。DeepSeek 的条款和隐私政策适用于该服务处理的数据。
 
 ## 致谢与许可证
 

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * Verifies the plugin identity and bootstrap behavior.
  */
 final class PluginBootstrapTest extends TestCase {
-	private const MAIN_FILE = __DIR__ . '/../deepseek-ai-provider.php';
+	private const MAIN_FILE = __DIR__ . '/../ai-connector-for-deepseek-guducat-ver.php';
 
 	/**
 	 * Load the plugin when the expected main file is present.
@@ -39,12 +39,12 @@ final class PluginBootstrapTest extends TestCase {
 
 		$contents = file_get_contents( self::MAIN_FILE );
 		$this->assertIsString( $contents );
-		$this->assertStringContainsString( 'Plugin Name:       DeepSeek AI Provider for WordPress', $contents );
-		$this->assertStringContainsString( 'Version:           0.1.0', $contents );
+		$this->assertStringContainsString( 'Plugin Name:       AI Connector for DeepSeek Guducat.ver', $contents );
+		$this->assertStringContainsString( 'Version:           0.2.0', $contents );
 		$this->assertStringContainsString( 'Requires at least: 7.0', $contents );
 		$this->assertStringContainsString( 'Requires PHP:      7.4', $contents );
 		$this->assertMatchesRegularExpression( '/^[ \t]*\*[ \t]*Author:[ \t]+Guducat \/ 孤独豹猫[ \t]*$/m', $contents );
-		$this->assertStringContainsString( 'Text Domain:       deepseek-ai-provider', $contents );
+		$this->assertStringContainsString( 'Text Domain:       ai-connector-for-deepseek-guducat-ver', $contents );
 		$this->assertStringContainsString( 'License:           GPL-2.0-or-later', $contents );
 	}
 
@@ -52,7 +52,36 @@ final class PluginBootstrapTest extends TestCase {
 	 * Verify the original entry point was replaced.
 	 */
 	public function test_old_main_file_is_removed(): void {
-		$this->assertFileDoesNotExist( __DIR__ . '/../ai-provider-for-deepseek.php' );
+		$this->assertFileDoesNotExist( __DIR__ . '/../deepseek-ai-provider.php' );
+	}
+
+	/**
+	 * Verify runtime class files terminate cleanly when requested outside WordPress.
+	 */
+	public function test_runtime_class_files_block_direct_access(): void {
+		$source_files = array(
+			__DIR__ . '/../src/Admin/DeepSeekBalancePage.php',
+			__DIR__ . '/../src/Admin/DeepSeekBalanceSection.php',
+			__DIR__ . '/../src/Admin/DeepSeekModelSettingsSection.php',
+			__DIR__ . '/../src/Admin/DeepSeekAdminPage.php',
+			__DIR__ . '/../src/Balance/DeepSeekBalanceClient.php',
+			__DIR__ . '/../src/Models/DeepSeekModelSettings.php',
+			__DIR__ . '/../src/Metadata/DeepSeekModelMetadataDirectory.php',
+			__DIR__ . '/../src/Models/DeepSeekTextGenerationModel.php',
+			__DIR__ . '/../src/Provider/DeepSeekProvider.php',
+		);
+		$script       = <<<'PHP'
+require $argv[1];
+echo 'AFTER';
+PHP;
+
+		foreach ( $source_files as $source_file ) {
+			list( $exit_code, $stdout, $stderr ) = $this->runIsolatedPhp( $script, $source_file );
+
+			$this->assertSame( 0, $exit_code, $source_file . ': ' . $stderr );
+			$this->assertSame( '', $stdout, $source_file );
+			$this->assertSame( '', $stderr, $source_file );
+		}
 	}
 
 	/**
@@ -76,15 +105,128 @@ final class PluginBootstrapTest extends TestCase {
 	 * Verify constants, autoloading, and hook registration.
 	 */
 	public function test_bootstrap_defines_constants_loads_provider_and_registers_init_hook(): void {
-		$this->assertSame( '0.1.0', constant( 'DEEPSEEK_AI_PROVIDER_VERSION' ) );
+		$this->assertSame( '0.2.0', constant( 'DEEPSEEK_AI_PROVIDER_VERSION' ) );
 		$this->assertSame( dirname( realpath( self::MAIN_FILE ) ) . DIRECTORY_SEPARATOR, constant( 'DEEPSEEK_AI_PROVIDER_DIR' ) );
 		$this->assertTrue( class_exists( DeepSeekProvider::class ) );
 
 		$actions = $GLOBALS['deepseek_ai_provider_test_actions'];
-		$this->assertCount( 1, $actions );
+		$this->assertCount( 2, $actions );
 		$this->assertSame( 'init', $actions[0]['hook_name'] );
 		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_provider', $actions[0]['callback'] );
 		$this->assertSame( 5, $actions[0]['priority'] );
+		$this->assertSame( 'admin_menu', $actions[1]['hook_name'] );
+		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_admin_pages', $actions[1]['callback'] );
+		$this->assertSame( 10, $actions[1]['priority'] );
+	}
+
+	/**
+	 * Verify the admin hook registers the balance page and its connector notice.
+	 */
+	public function test_admin_hook_registers_balance_page(): void {
+		$temp_dir = sys_get_temp_dir() . '/deepseek-ai-provider-admin-' . uniqid( '', true );
+		$this->assertTrue( mkdir( $temp_dir . '/src/Admin', 0777, true ) );
+		$this->assertTrue( mkdir( $temp_dir . '/src/Balance', 0777, true ) );
+		$this->assertTrue( mkdir( $temp_dir . '/src/Provider', 0777, true ) );
+		$this->assertTrue( mkdir( $temp_dir . '/src/Models', 0777, true ) );
+		$this->assertTrue( mkdir( $temp_dir . '/src/Metadata', 0777, true ) );
+		$this->assertTrue( copy( self::MAIN_FILE, $temp_dir . '/deepseek-ai-provider.php' ) );
+		$this->assertTrue(
+			copy(
+				__DIR__ . '/../src/Admin/DeepSeekBalancePage.php',
+				$temp_dir . '/src/Admin/DeepSeekBalancePage.php'
+			)
+		);
+		$this->assertTrue(
+			copy(
+				__DIR__ . '/../src/Balance/DeepSeekBalanceClient.php',
+				$temp_dir . '/src/Balance/DeepSeekBalanceClient.php'
+			)
+		);
+		$this->assertTrue(
+			copy(
+				__DIR__ . '/../src/Provider/DeepSeekProvider.php',
+				$temp_dir . '/src/Provider/DeepSeekProvider.php'
+			)
+		);
+		foreach ( array( 'DeepSeekAdminPage.php', 'DeepSeekBalanceSection.php', 'DeepSeekModelSettingsSection.php' ) as $admin_file ) {
+			$this->assertTrue( copy( __DIR__ . '/../src/Admin/' . $admin_file, $temp_dir . '/src/Admin/' . $admin_file ) );
+		}
+		$this->assertTrue( copy( __DIR__ . '/../src/Models/DeepSeekModelSettings.php', $temp_dir . '/src/Models/DeepSeekModelSettings.php' ) );
+		$this->assertTrue( copy( __DIR__ . '/../src/Metadata/DeepSeekModelMetadataDirectory.php', $temp_dir . '/src/Metadata/DeepSeekModelMetadataDirectory.php' ) );
+
+		$script = <<<'PHP'
+namespace WordPress\AiClient\Providers\ApiBasedImplementation {
+	abstract class AbstractApiProvider {}
+}
+
+namespace WordPress\AiClient\Providers\Http\Contracts {
+	interface HttpTransporterInterface {}
+	interface RequestAuthenticationInterface {}
+}
+
+namespace WordPress\AiClient {
+	final class AiClient {}
+}
+
+namespace {
+	define( 'ABSPATH', __DIR__ . '/' );
+
+	function plugin_dir_path( string $file ): string {
+		return rtrim( dirname( $file ), '/\\' ) . DIRECTORY_SEPARATOR;
+	}
+
+	function add_action( string $hook_name, callable $callback, int $priority = 10, int $accepted_args = 1 ): bool {
+		$GLOBALS['deepseek_admin_actions'][] = compact( 'hook_name', 'callback', 'priority', 'accepted_args' );
+		return true;
+	}
+
+	function add_options_page( string $page_title, string $menu_title, string $capability, string $menu_slug, callable $callback ): string {
+		$GLOBALS['deepseek_admin_page'] = compact( 'page_title', 'menu_title', 'capability', 'menu_slug', 'callback' );
+		return 'settings_page_' . $menu_slug;
+	}
+
+	function __( string $text, string $domain = '' ): string {
+		return $text;
+	}
+
+	require $argv[1];
+	\Guducat\DeepSeekAiProvider\register_admin_pages();
+
+	$page = $GLOBALS['deepseek_admin_page'] ?? array();
+		if ( 'deepseek-connector' !== ( $page['menu_slug'] ?? null ) || 'manage_options' !== ( $page['capability'] ?? null ) ) {
+		exit( 2 );
+	}
+
+	$notice_action = $GLOBALS['deepseek_admin_actions'][2] ?? array();
+	if ( 'admin_notices' !== ( $notice_action['hook_name'] ?? null ) ) {
+		exit( 3 );
+	}
+
+	echo 'OK';
+}
+PHP;
+
+		list( $exit_code, $stdout, $stderr ) = $this->runIsolatedPhp( $script, $temp_dir . '/deepseek-ai-provider.php' );
+
+		unlink( $temp_dir . '/src/Admin/DeepSeekBalancePage.php' );
+		unlink( $temp_dir . '/src/Admin/DeepSeekAdminPage.php' );
+		unlink( $temp_dir . '/src/Admin/DeepSeekBalanceSection.php' );
+		unlink( $temp_dir . '/src/Admin/DeepSeekModelSettingsSection.php' );
+		unlink( $temp_dir . '/src/Balance/DeepSeekBalanceClient.php' );
+		unlink( $temp_dir . '/src/Provider/DeepSeekProvider.php' );
+		unlink( $temp_dir . '/src/Models/DeepSeekModelSettings.php' );
+		unlink( $temp_dir . '/src/Metadata/DeepSeekModelMetadataDirectory.php' );
+		unlink( $temp_dir . '/deepseek-ai-provider.php' );
+		rmdir( $temp_dir . '/src/Admin' );
+		rmdir( $temp_dir . '/src/Balance' );
+		rmdir( $temp_dir . '/src/Provider' );
+		rmdir( $temp_dir . '/src/Models' );
+		rmdir( $temp_dir . '/src/Metadata' );
+		rmdir( $temp_dir . '/src' );
+		rmdir( $temp_dir );
+
+		$this->assertSame( 0, $exit_code, 'stdout=' . $stdout . '; stderr=' . $stderr );
+		$this->assertSame( 'OK', $stdout );
 	}
 
 	/**
