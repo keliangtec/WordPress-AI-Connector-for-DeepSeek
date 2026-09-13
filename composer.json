@@ -1,0 +1,55 @@
+{
+    "name": "guducat/deepseek-ai-provider",
+    "description": "DeepSeek AI provider for WordPress.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Guducat / 孤独豹猫",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Sajjad Hossain Sagor",
+            "role": "Original author"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpstan/phpstan": "~2.1.0",
+        "phpunit/phpunit": "^9.6",
+        "squizlabs/php_codesniffer": "^3.13",
+        "wordpress/php-ai-client": "^1.1",
+        "wp-coding-standards/wpcs": "^3.2"
+    },
+    "suggest": {
+        "wordpress/php-ai-client": "Required for WordPress 7.x/Core or standalone SDK environments."
+    },
+    "autoload": {
+        "psr-4": {
+            "Guducat\\DeepSeekAiProvider\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "@phpunit",
+        "phpunit": "phpunit",
+        "phpcs": "phpcs",
+        "phpstan": "phpstan analyse --memory-limit=256M",
+        "lint": [
+            "@phpcs",
+            "@phpstan"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform": {
+            "php": "7.4.0"
+        },
+        "sort-packages": true
+    }
+}

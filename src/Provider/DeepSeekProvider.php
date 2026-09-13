@@ -2,17 +2,17 @@
 /**
  * This file contains the definition of the DeepSeekProvider class.
  *
- * @package    Sajjad67\AiProviderForDeepSeek
- * @subpackage Sajjad67\AiProviderForDeepSeek/src
+ * @package    Guducat\DeepSeekAiProvider
+ * @subpackage Guducat\DeepSeekAiProvider/src
  * @author     Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
 declare(strict_types=1);
 
-namespace Sajjad67\AiProviderForDeepSeek\Provider;
+namespace Guducat\DeepSeekAiProvider\Provider;
 
-use Sajjad67\AiProviderForDeepSeek\Metadata\DeepSeekModelMetadataDirectory;
-use Sajjad67\AiProviderForDeepSeek\Models\DeepSeekTextGenerationModel;
+use Guducat\DeepSeekAiProvider\Metadata\DeepSeekModelMetadataDirectory;
+use Guducat\DeepSeekAiProvider\Models\DeepSeekTextGenerationModel;
 use WordPress\AiClient\AiClient;
 use WordPress\AiClient\Common\Exception\RuntimeException;
 use WordPress\AiClient\Providers\ApiBasedImplementation\AbstractApiProvider;
@@ -81,19 +81,21 @@ class DeepSeekProvider extends AbstractApiProvider {
 			RequestAuthenticationMethod::apiKey(),
 		);
 
+		$ai_client_version = (string) constant( AiClient::class . '::VERSION' );
+
 		// Provider description support was added in 1.2.0.
-		if ( version_compare( AiClient::VERSION, '1.2.0', '>=' ) ) {
+		if ( version_compare( $ai_client_version, '1.2.0', '>=' ) ) {
 			// For WordPress, we should translate the description.
 			if ( function_exists( '__' ) ) {
-				$provider_metadata_args[] = __( 'Text generation with DeepSeek AI models.', 'ai-provider-for-deepseek' );
+				$provider_metadata_args[] = __( 'Text generation with DeepSeek AI models.', 'deepseek-ai-provider' );
 			} else {
 				$provider_metadata_args[] = 'Text generation with DeepSeek AI models.';
 			}
 		}
 
 		// Provider logoPath support was added in 1.3.0.
-		if ( version_compare( AiClient::VERSION, '1.3.0', '>=' ) ) {
-			$provider_metadata_args[] = AIPRFD_AI_PROVIDER_FOR_DEEPSEEK_PLUGIN_DIR . 'assets/images/deepseek.svg';
+		if ( version_compare( $ai_client_version, '1.3.0', '>=' ) ) {
+			$provider_metadata_args[] = dirname( __DIR__, 2 ) . '/assets/images/deepseek.svg';
 		}
 
 		return new ProviderMetadata( ...$provider_metadata_args );

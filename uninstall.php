@@ -1,13 +1,11 @@
 <?php
 /**
- * Fired when the plugin is uninstalled.
+ * Plugin uninstall entry point.
  *
- * @since   1.0.0
- * @package Sajjad67\AiProviderForDeepSeek
- * @author  Sajjad Hossain Sagor <sagorh672@gmail.com>
+ * @since   0.1.0
+ * @package Guducat\DeepSeekAiProvider
  */
 
-// If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }

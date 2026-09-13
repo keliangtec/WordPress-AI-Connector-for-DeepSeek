@@ -1,0 +1,9 @@
+parameters:
+    level: 6
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - deepseek-ai-provider.php
+        - src
+        - tests
+    bootstrapFiles:
+        - tests/bootstrap.php

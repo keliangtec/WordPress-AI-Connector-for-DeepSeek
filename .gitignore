@@ -1,0 +1,12 @@
+/.idea/
+.DS_Store
+/.phpcs-cache
+/.phpunit.cache/
+/.phpunit.result.cache
+/.phpstan/
+/Chat.md
+/docs/
+/vendor/
+/dist/
+/build/
+*.iml

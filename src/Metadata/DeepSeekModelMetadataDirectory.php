@@ -2,16 +2,16 @@
 /**
  * This file contains the definition of the DeepSeekModelMetadataDirectory class.
  *
- * @package    Sajjad67\AiProviderForDeepSeek
- * @subpackage Sajjad67\AiProviderForDeepSeek/src
+ * @package    Guducat\DeepSeekAiProvider
+ * @subpackage Guducat\DeepSeekAiProvider/src
  * @author     Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
 declare(strict_types=1);
 
-namespace Sajjad67\AiProviderForDeepSeek\Metadata;
+namespace Guducat\DeepSeekAiProvider\Metadata;
 
-use Sajjad67\AiProviderForDeepSeek\Provider\DeepSeekProvider;
+use Guducat\DeepSeekAiProvider\Provider\DeepSeekProvider;
 use WordPress\AiClient\Messages\Enums\ModalityEnum;
 use WordPress\AiClient\Providers\Http\DTO\Request;
 use WordPress\AiClient\Providers\Http\DTO\Response;
@@ -30,14 +30,23 @@ use WordPress\AiClient\Providers\OpenAiCompatibleImplementation\AbstractOpenAiCo
  */
 class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetadataDirectory {
 	/**
+	 * Models that accept image parts in Chat Completions user messages.
+	 *
+	 * @var list<string>
+	 */
+	private const IMAGE_INPUT_MODEL_IDS = array(
+		'deepseek-flash',
+	);
+
+	/**
 	 * {@inheritDoc}
 	 *
-	 * @since  1.0.0
-	 * @param  HttpMethodEnum $method  The HTTP method to use for the request.
-	 * @param  string         $path    The API endpoint path (e.g., 'v1/models').
-	 * @param  array          $headers Optional. Array of HTTP headers. Default empty array.
-	 * @param  mixed          $data    Optional. The data to be sent in the request body. Default null.
-	 * @return Request                 The constructed Request object.
+	 * @since  0.1.0
+	 * @param  HttpMethodEnum       $method  The HTTP method to use for the request.
+	 * @param  string               $path    The API endpoint path (e.g., 'v1/models').
+	 * @param  array<string,string> $headers Optional. Array of HTTP headers. Default empty array.
+	 * @param  mixed                $data    Optional. The data to be sent in the request body. Default null.
+	 * @return Request                       The constructed Request object.
 	 */
 	protected function createRequest( HttpMethodEnum $method, string $path, array $headers = array(), $data = null ): Request {
 		return new Request(
@@ -51,8 +60,9 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @since  1.0.0
+	 * @since  0.1.0
 	 * @param  Response $response Response.
+	 * @return list<ModelMetadata> Parsed model metadata.
 	 * @throws ResponseException  Response data not valid.
 	 */
 	protected function parseResponseToModelMetadataList( Response $response ): array {
@@ -71,21 +81,29 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 			new SupportedOption( OptionEnum::stopSequences() ),
 			new SupportedOption( OptionEnum::outputMimeType(), array( 'text/plain', 'application/json' ) ),
 			new SupportedOption( OptionEnum::customOptions() ),
-			new SupportedOption( OptionEnum::inputModalities(), array( array( ModalityEnum::text() ) ) ),
 			new SupportedOption( OptionEnum::outputModalities(), array( array( ModalityEnum::text() ) ) ),
 		);
 
 		$models_data = (array) $response_data['data'];
 
 		$models = array_map(
-			function ( array $model_data ) use ( $base_text_options ): ModelMetadata {
-				$model_id = $model_data['id'];
+			static function ( array $model_data ) use ( $base_text_options ): ModelMetadata {
+				$model_id = (string) $model_data['id'];
+				$options  = array_merge(
+					$base_text_options,
+					array(
+						new SupportedOption(
+							OptionEnum::inputModalities(),
+							array( self::inputModalitiesForModel( $model_id ) )
+						),
+					)
+				);
 
 				return new ModelMetadata(
 					$model_id,
 					self::formatDisplayName( $model_id ),
 					array( CapabilityEnum::textGeneration(), CapabilityEnum::chatHistory() ),
-					$base_text_options
+					$options
 				);
 			},
 			$models_data
@@ -104,6 +122,7 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 	 */
 	private static function formatDisplayName( string $id ): string {
 		$map = array(
+			'deepseek-flash'    => 'DeepSeek-Flash',
 			'deepseek-v4-flash' => 'DeepSeek-V4-Flash',
 			'deepseek-v4-pro'   => 'DeepSeek-V4-Pro',
 		);
@@ -112,9 +131,25 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 	}
 
 	/**
+	 * Return the exact input modalities supported by a model.
+	 *
+	 * Unknown and future models default to text until DeepSeek documents otherwise.
+	 *
+	 * @param string $model_id Model ID returned by the API.
+	 * @return list<ModalityEnum>
+	 */
+	private static function inputModalitiesForModel( string $model_id ): array {
+		if ( in_array( $model_id, self::IMAGE_INPUT_MODEL_IDS, true ) ) {
+			return array( ModalityEnum::text(), ModalityEnum::image() );
+		}
+
+		return array( ModalityEnum::text() );
+	}
+
+	/**
 	 * Callback function for sorting models.
 	 *
-	 * Sorts models: Chat > Reasoner > Others.
+	 * Sorts known flagship models first, then falls back to model ID.
 	 *
 	 * @since  1.0.0
 	 * @param  ModelMetadata $a First model.
@@ -127,8 +162,8 @@ class DeepSeekModelMetadataDirectory extends AbstractOpenAiCompatibleModelMetada
 
 		// Pin Flagship models to the top.
 		$priority = array(
-			'deepseek-v4-flash' => 1,
-			'deepseek-v4-pro'   => 2,
+			'deepseek-flash'  => 1,
+			'deepseek-v4-pro' => 2,
 		);
 
 		$a_priority = $priority[ $a_id ] ?? 99;

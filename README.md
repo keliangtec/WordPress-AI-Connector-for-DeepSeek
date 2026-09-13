@@ -1,99 +1,52 @@
-# AI Provider For DeepSeek
+[简体中文](README.zh-CN.md)
 
-[![Plugin Banner](https://ps.w.org/ai-provider-for-deepseek/assets/banner-1544x500.png)](https://wordpress.org/plugins/ai-provider-for-deepseek/)
+# DeepSeek AI Provider for WordPress
 
-**Tags:** ai, deepseek, gpt, artificial-intelligence, connector \
-**Tested up to:** 7.1 \
-**Requires PHP:** 7.4
+DeepSeek AI Provider for WordPress registers DeepSeek as a provider for the WordPress AI Client.
 
-AI Provider for DeepSeek for the PHP AI Client SDK.
+## Capabilities
 
-## Description
+- Discovers available models dynamically with `GET /v1/models`.
+- Supports text generation, chat history, function calling, and DeepSeek reasoning-history replay through the WordPress AI Client.
+- Advertises text and image input only for the exact, case-sensitive model ID `deepseek-flash`. Every other current model and any unknown future model default to text-only input.
+- Passes image inputs represented as remote URLs or `data:` URIs through the WordPress PHP AI Client to DeepSeek's OpenAI-compatible Chat Completions endpoint.
+- Uses the WordPress AI Client connector to manage the DeepSeek API key.
 
-AI Provider for DeepSeek integrates DeepSeek's AI models into WordPress as a provider for the PHP AI Client SDK. Once activated, DeepSeek is automatically registered as a provider — no manual configuration required.
-
-## Features
-
-**Text Generation:** Use DeepSeek's language models for content creation, summarization,
-analysis, and more.
-
-**Function Calling:** Connect AI responses to your site's internal functions for dynamic,
-action-driven workflows.
-
-**Web Search Support:** Allow AI agents to pull in real-time information for more accurate,
-context-aware responses.
-
-**Dynamic Model Discovery:** Available models are fetched directly from the DeepSeek API,
-so your plugin stays compatible with new releases automatically.
+The plugin does not currently provide a WordPress Media Library UI, an upload workflow, Files API integration, image `detail` controls, or DeepSeek Responses API support. Generation requests are currently fixed to the OpenAI-compatible Chat Completions endpoint. The plugin does not upload images independently of the WordPress PHP AI Client.
 
 ## Requirements
 
-* PHP 7.4 or higher
-* For WordPress 6.9, the [wordpress/php-ai-client](https://github.com/WordPress/php-ai-client) package must be installed
-* For WordPress 7.0 and above, no additional changes are required
-* DeepSeek API key
+- WordPress 7.0 or later, with the WordPress AI Client available.
+- PHP 7.4 or later. The production target environment is PHP 8.4.
+- A DeepSeek API key configured in the WordPress AI Client connector.
 
 ## Installation
 
-To add a WordPress Plugin using the built-in plugin installer:
+1. Place the plugin directory in `wp-content/plugins/`.
+2. Activate **DeepSeek AI Provider for WordPress**.
+3. Configure the DeepSeek connector through the WordPress AI Client.
 
-Go to Plugins > Add New.
+## Image input
 
-1. Type in the name "AI Provider For DeepSeek" in Search Plugins box
-2. Find the "AI Provider For DeepSeek" Plugin to install.
-3. Click Install Now to begin the plugin installation.
-4. The resulting installation screen will list the installation as successful or note any problems during the install.
-If successful, click Activate Plugin to activate it, or Return to Plugin Installer for further actions.
+The OpenAI-compatible parent class in `wordpress/php-ai-client` serializes `File` image inputs into `image_url` content blocks. This plugin is responsible for declaring which DeepSeek models support image input and for applying DeepSeek-specific endpoint and request differences; it does not encode the images itself. Image transport is available only when the AI Client selects a model whose advertised input modalities include images, which this plugin currently declares only for the exact model ID `deepseek-flash`.
 
-To add a WordPress Plugin from GitHub repo / plugin zip file :
-1. Go to WordPress plugin page
-2. Click Add New & Upload Plugin
-3. Drag / Click upload the plugin zip file
-4. The resulting installation screen will list the installation as successful or note any problems during the install.
-If successful, click Activate Plugin to activate it, or Return to Plugin Installer for further actions.
+## Development
 
-## Frequently Asked Questions
+Install development dependencies with Composer, then run:
 
-### How do I get a DeepSeek API key?
+```bash
+composer validate --strict
+composer test
+composer phpcs
+composer phpstan
+```
 
-Visit the [DeepSeek Platform](https://platform.deepseek.com/) to create an account and generate an API key.
+CI covers the minimum supported PHP version, 7.4, and the production target, PHP 8.4.
 
-## External Services
-This plugin connects to the DeepSeek API (https://api.deepseek.com/v1) to provide AI capabilities within WordPress. It is required to enable text generation, function calling, web search, and dynamic model discovery features.
+## External service
 
-**What data is sent and when:**
-- Your DeepSeek API key is sent with every request to authenticate with the service.
-- Any text prompts, messages, or content you submit for AI processing are sent to DeepSeek's servers.
-- A request is made to the DeepSeek API to fetch available models when the plugin initializes.
-- Data is only transmitted when AI features are actively used (e.g., generating text, calling functions, or performing web searches).
+The plugin sends model-list requests and AI prompts to the DeepSeek API at `https://api.deepseek.com/v1`. Model discovery uses `GET /v1/models`; generation uses the OpenAI-compatible Chat Completions endpoint. Requests include the API key managed by the WordPress AI Client connector and the prompt content supplied for processing, including image URLs or data URIs when present. DeepSeek's terms and privacy policy govern data handled by that service.
 
-**Service provider:** DeepSeek
-- Website: [https://www.deepseek.com/](https://www.deepseek.com/)
-- API Base URL: [https://api.deepseek.com/v1](https://api.deepseek.com/v1)
-- Terms of Use: [https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html](https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html)
-- Privacy Policy: [https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
-- Terms of Service: [https://cdn.deepseek.com/policies/en-US/deepseek-open-platform-terms-of-service.html](https://cdn.deepseek.com/policies/en-US/deepseek-open-platform-terms-of-service.html)
+## Credits and license
 
-## Screenshots
-
-### 1. Connectors Page.
-
-![Connectors Page.](https://ps.w.org/ai-provider-for-deepseek/assets/screenshot-1.png)
-
-## Changelog
-
-### 1.0.3
-- Fix: Function calling silently broken. Removed deprecated models.
-
-### 1.0.2
-- Fix: pass reasoning_content back on thinking-mode tool calls.
-
-### 1.0.1
-- Added v4 New Models.
-
-### 1.0.0
-- Initial release.
-
-## Upgrade Notice
-
-Always try to keep your plugin update so that you can get the improved and additional features added to this plugin up to date.
+This project is based on the GPL-licensed **AI Provider For DeepSeek 1.0.3**, originally created by **Sajjad Hossain Sagor**. The original author's attribution is retained with thanks. The original project and this fork are distributed under **GPL-2.0-or-later**. See `NOTICE.md` and `license.txt` for details.

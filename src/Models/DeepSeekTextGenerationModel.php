@@ -2,16 +2,16 @@
 /**
  * This file contains the definition of the DeepSeekTextGenerationModel class.
  *
- * @package    Sajjad67\AiProviderForDeepSeek
- * @subpackage Sajjad67\AiProviderForDeepSeek/src
+ * @package    Guducat\DeepSeekAiProvider
+ * @subpackage Guducat\DeepSeekAiProvider/src
  * @author     Sajjad Hossain Sagor <sagorh672@gmail.com>
  */
 
 declare( strict_types=1 );
 
-namespace Sajjad67\AiProviderForDeepSeek\Models;
+namespace Guducat\DeepSeekAiProvider\Models;
 
-use Sajjad67\AiProviderForDeepSeek\Provider\DeepSeekProvider;
+use Guducat\DeepSeekAiProvider\Provider\DeepSeekProvider;
 use WordPress\AiClient\Messages\DTO\Message;
 use WordPress\AiClient\Messages\Enums\MessageRoleEnum;
 use WordPress\AiClient\Providers\Http\DTO\Request;
@@ -28,12 +28,12 @@ class DeepSeekTextGenerationModel extends AbstractOpenAiCompatibleTextGeneration
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @since  1.0.0
-	 * @param  HttpMethodEnum $method  The HTTP method to use for the request.
-	 * @param  string         $path    The API endpoint path (e.g., 'v1/models').
-	 * @param  array          $headers Optional. Array of HTTP headers. Default empty array.
-	 * @param  mixed          $data    Optional. The data to be sent in the request body. Default null.
-	 * @return Request                 The constructed Request object.
+	 * @since  0.1.0
+	 * @param  HttpMethodEnum       $method  The HTTP method to use for the request.
+	 * @param  string               $path    The API endpoint path (e.g., 'v1/models').
+	 * @param  array<string,string> $headers Optional. Array of HTTP headers. Default empty array.
+	 * @param  mixed                $data    Optional. The data to be sent in the request body. Default null.
+	 * @return Request                       The constructed Request object.
 	 */
 	protected function createRequest( HttpMethodEnum $method, string $path, array $headers = array(), $data = null ): Request {
 		$existing = $this->getRequestOptions();
@@ -42,7 +42,7 @@ class DeepSeekTextGenerationModel extends AbstractOpenAiCompatibleTextGeneration
 			: new RequestOptions();
 
 		// Sometimes inference is slow; force a generous timeout. only set if absent.
-		if ( $options->getTimeout() === null ) {
+		if ( null === $options->getTimeout() ) {
 			$options->setTimeout( 120.0 );
 		}
 
@@ -61,8 +61,12 @@ class DeepSeekTextGenerationModel extends AbstractOpenAiCompatibleTextGeneration
 	 *
 	 * See https://api-docs.deepseek.com/guides/thinking_mode#tool-calls.
 	 *
-	 * @param  array $prompt The prompt to generate text for.
-	 * @return array         The parameters for the API request.
+	 * @since 0.1.0
+	 * @param array $prompt The prompt to generate text for.
+	 * @return array The parameters for the API request.
+	 *
+	 * @phpstan-param list<Message> $prompt
+	 * @phpstan-return array<string, mixed>
 	 */
 	protected function prepareGenerateTextParams( array $prompt ): array {
 		$params = parent::prepareGenerateTextParams( $prompt );
@@ -73,10 +77,7 @@ class DeepSeekTextGenerationModel extends AbstractOpenAiCompatibleTextGeneration
 
 		$thoughts = array();
 		foreach ( $prompt as $message ) {
-			if ( ! $message instanceof Message ) {
-				continue;
-			}
-			if ( $message->getRole() !== MessageRoleEnum::model() ) {
+			if ( MessageRoleEnum::model() !== $message->getRole() ) {
 				continue;
 			}
 
