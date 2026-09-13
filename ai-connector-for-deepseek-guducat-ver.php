@@ -5,7 +5,7 @@
  * @package Guducat\DeepSeekAiProvider
  *
  * Plugin Name:       AI Connector for DeepSeek Guducat.ver
- * Description:       Registers DeepSeek as a provider for the WordPress AI Client.
+ * Description:       Registers DeepSeek as a provider for the WordPress AI Client, with model discovery, balance and model management, and a DeepSeek usage overview.
  * Version:           3.1.1
  * Requires at least: 7.0
  * Requires PHP:      7.4

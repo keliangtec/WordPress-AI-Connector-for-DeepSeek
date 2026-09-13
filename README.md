@@ -2,7 +2,7 @@
 
 # AI Connector for DeepSeek Guducat.ver
 
-AI Connector for DeepSeek Guducat.ver registers DeepSeek as a provider for the WordPress AI Client.
+AI Connector for DeepSeek Guducat.ver registers DeepSeek as a provider for the WordPress AI Client, with dynamic model discovery, connector-based API key management, an administrator model and balance page, and a DeepSeek usage overview covering tokens, cache usage, and estimated costs.
 
 Current release: **3.1.1**.
 

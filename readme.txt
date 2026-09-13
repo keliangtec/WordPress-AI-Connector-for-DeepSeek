@@ -8,7 +8,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Registers DeepSeek as a provider for the WordPress AI Client and provides administrator model management tools.
+Registers DeepSeek as a provider for the WordPress AI Client, with model discovery, balance and model management, and a DeepSeek usage overview.
 
 == Description ==
 
