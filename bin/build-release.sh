@@ -4,7 +4,7 @@ set -euo pipefail
 readonly plugin_slug='ai-connector-for-deepseek-guducat-ver'
 readonly main_file="${plugin_slug}.php"
 readonly output_dir="${1:-dist}"
-tag="${GITHUB_REF_NAME:-${2:-}}"
+tag="${2:-${GITHUB_REF_NAME:-}}"
 
 if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   echo "Release tag must match vX.Y.Z: ${tag:-<empty>}" >&2

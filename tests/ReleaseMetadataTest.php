@@ -24,7 +24,7 @@ final class ReleaseMetadataTest extends TestCase {
 
 	/** Reject a tag whose version does not match the plugin metadata. */
 	public function test_release_builder_rejects_version_mismatch(): void {
-		$command = 'bash bin/build-release.sh /tmp/deepseek-release-test v9.9.9 2>&1';
+		$command = 'GITHUB_REF_NAME=main bash bin/build-release.sh /tmp/deepseek-release-test v9.9.9 2>&1';
 		$output  = array();
 		$status  = 0;
 		exec( $command, $output, $status ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec -- Tests invoke the bounded local release script.
@@ -41,10 +41,10 @@ final class ReleaseMetadataTest extends TestCase {
 		$output_dir = sys_get_temp_dir() . '/deepseek-release-' . uniqid( '', true );
 		$output     = array();
 		$status     = 0;
-		exec( 'bash bin/build-release.sh ' . escapeshellarg( $output_dir ) . ' v3.1.0 2>&1', $output, $status ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec -- Tests invoke the bounded local release script.
+		exec( 'GITHUB_REF_NAME=main bash bin/build-release.sh ' . escapeshellarg( $output_dir ) . ' v3.1.1 2>&1', $output, $status ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec -- Tests invoke the bounded local release script.
 
 		$this->assertSame( 0, $status, implode( "\n", $output ) );
-		$archive = $output_dir . '/ai-connector-for-deepseek-guducat-ver-v3.1.0.zip';
+		$archive = $output_dir . '/ai-connector-for-deepseek-guducat-ver-v3.1.1.zip';
 		$this->assertFileExists( $archive );
 
 		$entries = trim( (string) shell_exec( 'unzip -Z1 ' . escapeshellarg( $archive ) ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_shell_exec -- Tests inspect the bounded archive created above.
