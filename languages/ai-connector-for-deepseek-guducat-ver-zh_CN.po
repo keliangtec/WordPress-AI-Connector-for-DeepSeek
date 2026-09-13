@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AI Connector for DeepSeek Guducat.ver 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 18:10+0800\n"
+"POT-Creation-Date: 2026-09-13 20:17+0800\n"
 "PO-Revision-Date: 2026-09-13 18:15+0800\n"
 "Last-Translator: Guducat\n"
 "Language-Team: Simplified Chinese\n"
@@ -17,75 +17,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/Admin/DeepSeekAdminPage.php:32 src/Admin/DeepSeekAdminPage.php:33
-#: src/Admin/DeepSeekAdminPage.php:75
+#: src/Admin/DeepSeekAdminPage.php:78
 msgid "DeepSeek Connector"
 msgstr "DeepSeek Connector"
 
-#: src/Admin/DeepSeekAdminPage.php:76
+#: src/Admin/DeepSeekAdminPage.php:79
 msgid ""
 "Manage DeepSeek request observability, account balance, and model "
 "capabilities."
 msgstr "管理 DeepSeek 请求观测、账户余额和模型能力。"
 
-#: src/Admin/DeepSeekAdminPage.php:80
+#: src/Admin/DeepSeekAdminPage.php:83
 msgid "AI Request Logging"
 msgstr "AI 请求日志"
 
-#: src/Admin/DeepSeekAdminPage.php:85
+#: src/Admin/DeepSeekAdminPage.php:92
 msgid "Account balance"
 msgstr "账户余额"
 
-#: src/Admin/DeepSeekAdminPage.php:86
+#: src/Admin/DeepSeekAdminPage.php:93
 msgid "Balance is queried only after an explicit refresh."
 msgstr "仅在明确点击刷新后查询余额。"
 
-#: src/Admin/DeepSeekAdminPage.php:87 src/Admin/DeepSeekBalancePage.php:119
+#: src/Admin/DeepSeekAdminPage.php:94 src/Admin/DeepSeekBalancePage.php:119
 msgid "Refresh balance"
 msgstr "刷新余额"
 
-#: src/Admin/DeepSeekAdminPage.php:91 src/Admin/DeepSeekPricingSection.php:107
+#: src/Admin/DeepSeekAdminPage.php:98 src/Admin/DeepSeekPricingSection.php:107
 msgid "Pricing rules"
 msgstr "计价规则"
 
-#: src/Admin/DeepSeekAdminPage.php:112
+#: src/Admin/DeepSeekAdminPage.php:119
 msgid "Enabled"
 msgstr "已启用"
 
-#: src/Admin/DeepSeekAdminPage.php:112
+#: src/Admin/DeepSeekAdminPage.php:119
 msgid "WordPress AI is recording requests for observability and debugging."
 msgstr "WordPress AI 正在记录请求，用于观测和调试。"
 
-#: src/Admin/DeepSeekAdminPage.php:114
+#: src/Admin/DeepSeekAdminPage.php:121 src/Admin/DeepSeekCostOverview.php:144
 msgid "View AI Request Logs"
 msgstr "查看 AI 请求日志"
 
-#: src/Admin/DeepSeekAdminPage.php:122 src/Admin/DeepSeekPricingSection.php:121
+#: src/Admin/DeepSeekAdminPage.php:129 src/Admin/DeepSeekPricingSection.php:121
 msgid "Disabled"
 msgstr "已停用"
 
-#: src/Admin/DeepSeekAdminPage.php:122
+#: src/Admin/DeepSeekAdminPage.php:129
 msgid ""
 "Enable the experimental AI Request Logging feature in WordPress AI settings "
 "to record requests."
 msgstr "请在 WordPress AI 设置中启用实验性 AI 请求日志功能，以记录请求。"
 
-#: src/Admin/DeepSeekAdminPage.php:124
+#: src/Admin/DeepSeekAdminPage.php:131
 msgid "Open AI Settings"
 msgstr "打开 AI 设置"
 
-#: src/Admin/DeepSeekAdminPage.php:130
+#: src/Admin/DeepSeekAdminPage.php:137
 msgid "WordPress AI unavailable"
 msgstr "WordPress AI 不可用"
 
-#: src/Admin/DeepSeekAdminPage.php:130
+#: src/Admin/DeepSeekAdminPage.php:137
 msgid "Install and activate the WordPress AI plugin to use AI Request Logging."
 msgstr "请安装并启用 WordPress AI 插件以使用 AI 请求日志。"
 
-#: src/Admin/DeepSeekAdminPage.php:142
+#: src/Admin/DeepSeekAdminPage.php:149
 msgid "DeepSeek connector tools are available here."
 msgstr "DeepSeek Connector 工具位于此处。"
 
-#: src/Admin/DeepSeekAdminPage.php:142
+#: src/Admin/DeepSeekAdminPage.php:149
 msgid "Open DeepSeek Connector"
 msgstr "打开 DeepSeek Connector"
 
@@ -136,6 +136,124 @@ msgstr "赠送余额"
 #: src/Admin/DeepSeekBalancePage.php:200
 msgid "Topped-up balance"
 msgstr "充值余额"
+
+#: src/Admin/DeepSeekCostOverview.php:112
+msgid "DeepSeek usage overview"
+msgstr "DeepSeek 用量概览"
+
+#: src/Admin/DeepSeekCostOverview.php:113
+msgid ""
+"Estimated usage is calculated from WordPress AI request logs and saved "
+"pricing snapshots."
+msgstr "估算用量根据 WordPress AI 请求日志和已保存的价格快照计算。"
+
+#: src/Admin/DeepSeekCostOverview.php:117
+msgid "Period"
+msgstr "时间范围"
+
+#: src/Admin/DeepSeekCostOverview.php:123
+msgid "Refresh"
+msgstr "刷新"
+
+#: src/Admin/DeepSeekCostOverview.php:128
+msgid ""
+"AI Request Logging is not available. Enable it to collect DeepSeek usage "
+"data."
+msgstr "AI 请求日志不可用。请启用该功能以收集 DeepSeek 用量数据。"
+
+#: src/Admin/DeepSeekCostOverview.php:132
+msgid "DeepSeek usage metrics"
+msgstr "DeepSeek 用量指标"
+
+#: src/Admin/DeepSeekCostOverview.php:133
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Estimated cost"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:133
+msgid "Priced requests only"
+msgstr "仅统计已有价格的请求"
+
+#: src/Admin/DeepSeekCostOverview.php:134
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Requests"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:134
+msgid "priced"
+msgstr "已计价"
+
+#: src/Admin/DeepSeekCostOverview.php:135
+msgid "Total tokens"
+msgstr "Token 总数"
+
+#: src/Admin/DeepSeekCostOverview.php:135
+msgid "cache hit"
+msgstr "缓存命中"
+
+#: src/Admin/DeepSeekCostOverview.php:136
+msgid "Pricing coverage"
+msgstr "计价覆盖率"
+
+#: src/Admin/DeepSeekCostOverview.php:136
+msgid "without a snapshot"
+msgstr "条没有价格快照"
+
+#: src/Admin/DeepSeekCostOverview.php:140
+msgid ""
+"Some historical requests do not contain a DeepSeek pricing snapshot. They "
+"are excluded from estimated cost totals."
+msgstr "部分历史请求没有 DeepSeek 价格快照，因此不会计入估算费用总额。"
+
+#: src/Admin/DeepSeekCostOverview.php:145
+msgid "Costs are estimates and may differ from the provider invoice."
+msgstr "费用仅为估算值，可能与提供商账单不同。"
+
+#: src/Admin/DeepSeekCostOverview.php:147
+msgid "By model"
+msgstr "按模型统计"
+
+#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekPricingSection.php:110
+msgid "Model"
+msgstr "模型"
+
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Tokens"
+msgstr "Token"
+
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Cache hit"
+msgstr "缓存命中率"
+
+#: src/Admin/DeepSeekCostOverview.php:152
+msgid "No DeepSeek Chat Completions requests found for this period."
+msgstr "此时间范围内没有找到 DeepSeek Chat Completions 请求。"
+
+#: src/Admin/DeepSeekCostOverview.php:165
+#, php-format
+msgid "%d without pricing snapshot"
+msgstr "%d 条没有价格快照"
+
+#: src/Admin/DeepSeekCostOverview.php:200
+msgid "Unknown model"
+msgstr "未知模型"
+
+#: src/Admin/DeepSeekCostOverview.php:453
+msgid "Last 24 hours"
+msgstr "最近 24 小时"
+
+#: src/Admin/DeepSeekCostOverview.php:454
+msgid "Last 7 days"
+msgstr "最近 7 天"
+
+#: src/Admin/DeepSeekCostOverview.php:455
+msgid "Last 30 days"
+msgstr "最近 30 天"
+
+#: src/Admin/DeepSeekCostOverview.php:456
+msgid "All available logs"
+msgstr "所有可用日志"
 
 #: src/Admin/DeepSeekModelSettingsSection.php:124
 msgid "Model management"
@@ -211,15 +329,12 @@ msgstr "自定义计价规则已保存。"
 msgid ""
 "Estimated costs use the rule effective when the request is logged. Custom "
 "rules override built-in rules with the same effective time."
-msgstr "估算费用使用请求记录时生效的规则。同一生效时间下，自定义规则优先于内置规则。"
+msgstr ""
+"估算费用使用请求记录时生效的规则。同一生效时间下，自定义规则优先于内置规则。"
 
 #: src/Admin/DeepSeekPricingSection.php:110
 msgid "Effective (UTC)"
 msgstr "生效时间（UTC）"
-
-#: src/Admin/DeepSeekPricingSection.php:110
-msgid "Model"
-msgstr "模型"
 
 #: src/Admin/DeepSeekPricingSection.php:110
 msgid "Rates per 1M tokens"

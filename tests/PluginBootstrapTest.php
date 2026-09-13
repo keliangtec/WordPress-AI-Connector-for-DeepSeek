@@ -66,6 +66,7 @@ final class PluginBootstrapTest extends TestCase {
 			__DIR__ . '/../src/Admin/DeepSeekAdminPage.php',
 			__DIR__ . '/../src/Admin/DeepSeekPricingSection.php',
 			__DIR__ . '/../src/Admin/DeepSeekRequestLoggingStatus.php',
+			__DIR__ . '/../src/Admin/DeepSeekCostOverview.php',
 			__DIR__ . '/../src/Balance/DeepSeekBalanceClient.php',
 			__DIR__ . '/../src/Observability/DeepSeekRequestLoggingIntegration.php',
 			__DIR__ . '/../src/Pricing/DeepSeekPricingCatalog.php',
@@ -117,7 +118,7 @@ PHP;
 		$this->assertTrue( class_exists( DeepSeekProvider::class ) );
 
 		$actions = $GLOBALS['deepseek_ai_provider_test_actions'];
-		$this->assertCount( 4, $actions );
+		$this->assertCount( 5, $actions );
 		$this->assertSame( 'init', $actions[0]['hook_name'] );
 		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_provider', $actions[0]['callback'] );
 		$this->assertSame( 5, $actions[0]['priority'] );
@@ -125,9 +126,12 @@ PHP;
 		$this->assertSame( 1, $actions[1]['priority'] );
 		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_request_logging_integration', $actions[2]['callback'] );
 		$this->assertSame( 6, $actions[2]['priority'] );
-		$this->assertSame( 'admin_menu', $actions[3]['hook_name'] );
-		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_admin_pages', $actions[3]['callback'] );
+		$this->assertSame( 'wpai_request_logged', $actions[3]['hook_name'] );
+		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\clear_cost_overview_cache', $actions[3]['callback'] );
 		$this->assertSame( 10, $actions[3]['priority'] );
+		$this->assertSame( 'admin_menu', $actions[4]['hook_name'] );
+		$this->assertSame( 'Guducat\\DeepSeekAiProvider\\register_admin_pages', $actions[4]['callback'] );
+		$this->assertSame( 10, $actions[4]['priority'] );
 	}
 
 	/**
@@ -212,8 +216,14 @@ namespace {
 		exit( 2 );
 	}
 
-	$notice_action = $GLOBALS['deepseek_admin_actions'][4] ?? array();
-	if ( 'admin_notices' !== ( $notice_action['hook_name'] ?? null ) ) {
+		$notice_action = array();
+		foreach ( $GLOBALS['deepseek_admin_actions'] as $action ) {
+			if ( 'admin_notices' === ( $action['hook_name'] ?? null ) ) {
+				$notice_action = $action;
+				break;
+			}
+		}
+		if ( empty( $notice_action ) ) {
 		exit( 3 );
 	}
 

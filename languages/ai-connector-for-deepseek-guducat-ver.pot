@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AI Connector for DeepSeek Guducat.ver 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 18:10+0800\n"
+"POT-Creation-Date: 2026-09-13 20:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +18,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/Admin/DeepSeekAdminPage.php:32 src/Admin/DeepSeekAdminPage.php:33
-#: src/Admin/DeepSeekAdminPage.php:75
+#: src/Admin/DeepSeekAdminPage.php:78
 msgid "DeepSeek Connector"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:76
+#: src/Admin/DeepSeekAdminPage.php:79
 msgid ""
 "Manage DeepSeek request observability, account balance, and model "
 "capabilities."
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:80
+#: src/Admin/DeepSeekAdminPage.php:83
 msgid "AI Request Logging"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:85
+#: src/Admin/DeepSeekAdminPage.php:92
 msgid "Account balance"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:86
+#: src/Admin/DeepSeekAdminPage.php:93
 msgid "Balance is queried only after an explicit refresh."
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:87 src/Admin/DeepSeekBalancePage.php:119
+#: src/Admin/DeepSeekAdminPage.php:94 src/Admin/DeepSeekBalancePage.php:119
 msgid "Refresh balance"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:91 src/Admin/DeepSeekPricingSection.php:107
+#: src/Admin/DeepSeekAdminPage.php:98 src/Admin/DeepSeekPricingSection.php:107
 msgid "Pricing rules"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:112
+#: src/Admin/DeepSeekAdminPage.php:119
 msgid "Enabled"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:112
+#: src/Admin/DeepSeekAdminPage.php:119
 msgid "WordPress AI is recording requests for observability and debugging."
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:114
+#: src/Admin/DeepSeekAdminPage.php:121 src/Admin/DeepSeekCostOverview.php:144
 msgid "View AI Request Logs"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:122 src/Admin/DeepSeekPricingSection.php:121
+#: src/Admin/DeepSeekAdminPage.php:129 src/Admin/DeepSeekPricingSection.php:121
 msgid "Disabled"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:122
+#: src/Admin/DeepSeekAdminPage.php:129
 msgid ""
 "Enable the experimental AI Request Logging feature in WordPress AI settings "
 "to record requests."
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:124
+#: src/Admin/DeepSeekAdminPage.php:131
 msgid "Open AI Settings"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:130
+#: src/Admin/DeepSeekAdminPage.php:137
 msgid "WordPress AI unavailable"
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:130
+#: src/Admin/DeepSeekAdminPage.php:137
 msgid "Install and activate the WordPress AI plugin to use AI Request Logging."
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:142
+#: src/Admin/DeepSeekAdminPage.php:149
 msgid "DeepSeek connector tools are available here."
 msgstr ""
 
-#: src/Admin/DeepSeekAdminPage.php:142
+#: src/Admin/DeepSeekAdminPage.php:149
 msgid "Open DeepSeek Connector"
 msgstr ""
 
@@ -136,6 +136,124 @@ msgstr ""
 
 #: src/Admin/DeepSeekBalancePage.php:200
 msgid "Topped-up balance"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:112
+msgid "DeepSeek usage overview"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:113
+msgid ""
+"Estimated usage is calculated from WordPress AI request logs and saved "
+"pricing snapshots."
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:117
+msgid "Period"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:123
+msgid "Refresh"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:128
+msgid ""
+"AI Request Logging is not available. Enable it to collect DeepSeek usage "
+"data."
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:132
+msgid "DeepSeek usage metrics"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:133
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Estimated cost"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:133
+msgid "Priced requests only"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:134
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Requests"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:134
+msgid "priced"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:135
+msgid "Total tokens"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:135
+msgid "cache hit"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:136
+msgid "Pricing coverage"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:136
+msgid "without a snapshot"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:140
+msgid ""
+"Some historical requests do not contain a DeepSeek pricing snapshot. They "
+"are excluded from estimated cost totals."
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:145
+msgid "Costs are estimates and may differ from the provider invoice."
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:147
+msgid "By model"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekPricingSection.php:110
+msgid "Model"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Tokens"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:149
+msgid "Cache hit"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:152
+msgid "No DeepSeek Chat Completions requests found for this period."
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:165
+#, php-format
+msgid "%d without pricing snapshot"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:200
+msgid "Unknown model"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:453
+msgid "Last 24 hours"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:454
+msgid "Last 7 days"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:455
+msgid "Last 30 days"
+msgstr ""
+
+#: src/Admin/DeepSeekCostOverview.php:456
+msgid "All available logs"
 msgstr ""
 
 #: src/Admin/DeepSeekModelSettingsSection.php:124
@@ -216,10 +334,6 @@ msgstr ""
 
 #: src/Admin/DeepSeekPricingSection.php:110
 msgid "Effective (UTC)"
-msgstr ""
-
-#: src/Admin/DeepSeekPricingSection.php:110
-msgid "Model"
 msgstr ""
 
 #: src/Admin/DeepSeekPricingSection.php:110

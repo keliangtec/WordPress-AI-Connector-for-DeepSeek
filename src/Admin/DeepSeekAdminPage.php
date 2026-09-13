@@ -66,9 +66,12 @@ final class DeepSeekAdminPage {
 		$model_settings = new DeepSeekModelSettingsSection();
 		$pricing        = new DeepSeekPricingSection();
 		$logging_status = new DeepSeekRequestLoggingStatus();
+		$overview       = new DeepSeekCostOverview();
 		$pricing_result = $pricing->process_request();
 		$model_result   = $model_settings->process_request();
 		$balance_result = $balance->process_request();
+		$period         = isset( $_GET['deepseek_cost_period'] ) && is_string( $_GET['deepseek_cost_period'] ) ? sanitize_key( wp_unslash( $_GET['deepseek_cost_period'] ) ) : 'day'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$overview_data  = $overview->get_summary( $period );
 		?>
 		<div class="wrap deepseek-connector-admin">
 			<div class="deepseek-connector-admin__header">
@@ -79,6 +82,10 @@ final class DeepSeekAdminPage {
 			<section class="deepseek-connector-admin__section" aria-labelledby="deepseek-request-logging-heading">
 				<h2 id="deepseek-request-logging-heading"><?php echo esc_html__( 'AI Request Logging', 'ai-connector-for-deepseek-guducat-ver' ); ?></h2>
 				<?php $this->render_logging_status( $logging_status ); ?>
+			</section>
+
+			<section class="deepseek-connector-admin__section deepseek-connector-admin__overview" aria-labelledby="deepseek-cost-overview-heading">
+				<?php $overview->render( $overview_data, $logging_status->get_logs_url() ); ?>
 			</section>
 
 			<section class="deepseek-connector-admin__section" aria-labelledby="deepseek-balance-heading">

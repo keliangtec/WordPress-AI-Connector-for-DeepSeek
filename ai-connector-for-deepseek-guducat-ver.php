@@ -100,6 +100,13 @@ function register_request_logging_integration(): void {
 
 add_action( 'init', __NAMESPACE__ . '\\register_request_logging_integration', 6 );
 
+/** Clear the DeepSeek usage overview cache after a new AI request is logged. */
+function clear_cost_overview_cache(): void {
+	( new Admin\DeepSeekCostOverview() )->clear_cache();
+}
+
+add_action( 'wpai_request_logged', __NAMESPACE__ . '\\clear_cost_overview_cache', 10, 2 );
+
 /**
  * Register the DeepSeek administration page.
  *

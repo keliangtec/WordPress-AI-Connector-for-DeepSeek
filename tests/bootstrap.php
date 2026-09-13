@@ -388,6 +388,19 @@ if ( ! function_exists( 'selected' ) ) {
 	}
 }
 
+if ( ! function_exists( 'number_format_i18n' ) ) {
+	/**
+	 * Format a number using a deterministic test locale.
+	 *
+	 * @param float|int $number   Number to format.
+	 * @param int       $decimals Decimal places.
+	 * @return string
+	 */
+	function number_format_i18n( $number, int $decimals = 0 ): string {
+		return number_format( (float) $number, $decimals, '.', ',' );
+	}
+}
+
 if ( ! function_exists( 'submit_button' ) ) {
 	/**
 	 * Render a test submit button.

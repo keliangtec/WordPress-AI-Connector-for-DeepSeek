@@ -15,6 +15,7 @@ AI Connector for DeepSeek Guducat.ver 将 DeepSeek 注册为 WordPress AI Client
 - 允许配置一个实验性模型兜底，并明确选择仅文本或文本 + 图片能力。
 - 检测 WordPress AI 的 `AI Request Logging` 是否实际启用，并引导管理员进入其设置页和既有请求日志页面。
 - 为 DeepSeek Chat Completions 日志详情补充缓存用量、推理 token 和基于版本化价目规则的估算费用。
+- 在 Connector 页面增加 DeepSeek 用量概览，支持时间范围、计价覆盖率、Token/缓存统计、按模型统计和估算费用。
 - 内置历史人民币价目规则，并允许管理员在插件更新前自行添加或覆盖新规则。
 
 本插件当前不提供 WordPress 媒体库 UI、上传流程、Files API 集成、图片 `detail` 控制或 DeepSeek Responses API 支持。生成请求当前固定使用 OpenAI 兼容的 Chat Completions 端点。本插件不会绕过 WordPress PHP AI Client 独立上传图片。
@@ -34,6 +35,8 @@ AI Connector for DeepSeek Guducat.ver 将 DeepSeek 注册为 WordPress AI Client
 管理页面位于 **设置 > DeepSeek Connector**。该页面仅管理员可访问，打开页面本身不会查询 DeepSeek。查询使用 WordPress AI Client 已注册的运行时认证对象；API key 和 `Authorization` 请求头不会发送到浏览器。
 
 请求历史仍由 WordPress AI 插件统一管理。请先在 WordPress AI 设置中启用 **AI Request Logging**，再通过 **工具 > AI Request Logs** 查看记录。本插件不会创建第二张日志表。每次估算都会把当时使用的价格快照写入日志，因此后续改价不会改变旧记录；估算仅供参考，可能与 DeepSeek 实际账单不同。
+
+Connector 页的用量概览读取同一份请求日志，聚合结果最多缓存 60 秒。没有保存 DeepSeek 价格快照的请求会单独显示，并排除在估算费用总额之外；它们不会被当作零费用请求。
 
 ## 图片输入
 
