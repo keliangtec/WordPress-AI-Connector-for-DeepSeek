@@ -4,6 +4,8 @@
 
 AI Connector for DeepSeek Guducat.ver 将 DeepSeek 注册为 WordPress AI Client 的提供商。
 
+当前版本：**3.1.0**。
+
 ## 功能
 
 - 通过 `GET /v1/models` 动态发现可用模型。

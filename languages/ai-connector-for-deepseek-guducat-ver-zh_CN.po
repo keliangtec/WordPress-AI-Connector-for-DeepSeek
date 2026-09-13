@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Connector for DeepSeek Guducat.ver 0.3.0\n"
+"Project-Id-Version: AI Connector for DeepSeek Guducat.ver 3.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 20:17+0800\n"
+"POT-Creation-Date: 2026-09-13 20:37+0800\n"
 "PO-Revision-Date: 2026-09-13 18:15+0800\n"
 "Last-Translator: Guducat\n"
 "Language-Team: Simplified Chinese\n"
@@ -15,79 +15,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: src/Admin/DeepSeekAdminPage.php:32 src/Admin/DeepSeekAdminPage.php:33
-#: src/Admin/DeepSeekAdminPage.php:78
-msgid "DeepSeek Connector"
-msgstr "DeepSeek Connector"
-
-#: src/Admin/DeepSeekAdminPage.php:79
-msgid ""
-"Manage DeepSeek request observability, account balance, and model "
-"capabilities."
-msgstr "管理 DeepSeek 请求观测、账户余额和模型能力。"
-
-#: src/Admin/DeepSeekAdminPage.php:83
-msgid "AI Request Logging"
-msgstr "AI 请求日志"
-
-#: src/Admin/DeepSeekAdminPage.php:92
-msgid "Account balance"
-msgstr "账户余额"
-
-#: src/Admin/DeepSeekAdminPage.php:93
-msgid "Balance is queried only after an explicit refresh."
-msgstr "仅在明确点击刷新后查询余额。"
-
-#: src/Admin/DeepSeekAdminPage.php:94 src/Admin/DeepSeekBalancePage.php:119
-msgid "Refresh balance"
-msgstr "刷新余额"
-
-#: src/Admin/DeepSeekAdminPage.php:98 src/Admin/DeepSeekPricingSection.php:107
-msgid "Pricing rules"
-msgstr "计价规则"
-
-#: src/Admin/DeepSeekAdminPage.php:119
-msgid "Enabled"
-msgstr "已启用"
-
-#: src/Admin/DeepSeekAdminPage.php:119
-msgid "WordPress AI is recording requests for observability and debugging."
-msgstr "WordPress AI 正在记录请求，用于观测和调试。"
-
-#: src/Admin/DeepSeekAdminPage.php:121 src/Admin/DeepSeekCostOverview.php:144
-msgid "View AI Request Logs"
-msgstr "查看 AI 请求日志"
-
-#: src/Admin/DeepSeekAdminPage.php:129 src/Admin/DeepSeekPricingSection.php:121
-msgid "Disabled"
-msgstr "已停用"
-
-#: src/Admin/DeepSeekAdminPage.php:129
-msgid ""
-"Enable the experimental AI Request Logging feature in WordPress AI settings "
-"to record requests."
-msgstr "请在 WordPress AI 设置中启用实验性 AI 请求日志功能，以记录请求。"
-
-#: src/Admin/DeepSeekAdminPage.php:131
-msgid "Open AI Settings"
-msgstr "打开 AI 设置"
-
-#: src/Admin/DeepSeekAdminPage.php:137
-msgid "WordPress AI unavailable"
-msgstr "WordPress AI 不可用"
-
-#: src/Admin/DeepSeekAdminPage.php:137
-msgid "Install and activate the WordPress AI plugin to use AI Request Logging."
-msgstr "请安装并启用 WordPress AI 插件以使用 AI 请求日志。"
-
-#: src/Admin/DeepSeekAdminPage.php:149
-msgid "DeepSeek connector tools are available here."
-msgstr "DeepSeek Connector 工具位于此处。"
-
-#: src/Admin/DeepSeekAdminPage.php:149
-msgid "Open DeepSeek Connector"
-msgstr "打开 DeepSeek Connector"
 
 #: src/Admin/DeepSeekBalancePage.php:53 src/Admin/DeepSeekBalancePage.php:54
 #: src/Admin/DeepSeekBalancePage.php:114
@@ -97,6 +24,10 @@ msgstr "DeepSeek 余额"
 #: src/Admin/DeepSeekBalancePage.php:115
 msgid "The balance is queried only when you click the refresh button."
 msgstr "仅在点击刷新按钮时查询余额。"
+
+#: src/Admin/DeepSeekBalancePage.php:119 src/Admin/DeepSeekAdminPage.php:94
+msgid "Refresh balance"
+msgstr "刷新余额"
 
 #: src/Admin/DeepSeekBalancePage.php:139
 msgid "DeepSeek account balance is available on the provider status page."
@@ -121,7 +52,7 @@ msgid "Not available for API calls"
 msgstr "不可用于 API 调用"
 
 #: src/Admin/DeepSeekBalancePage.php:197
-#: src/Admin/DeepSeekPricingSection.php:139
+#: src/Admin/DeepSeekPricingSection.php:141
 msgid "Currency"
 msgstr "币种"
 
@@ -136,6 +67,60 @@ msgstr "赠送余额"
 #: src/Admin/DeepSeekBalancePage.php:200
 msgid "Topped-up balance"
 msgstr "充值余额"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:124
+msgid "Model management"
+msgstr "模型管理"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:125
+msgid ""
+"Refresh the remote list only when needed. Unknown models default to text "
+"input."
+msgstr "仅在需要时刷新远程列表。未知模型默认仅支持文本输入。"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:130
+msgid "Refresh model list"
+msgstr "刷新模型列表"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:132
+msgid ""
+"Remote model IDs are discovered from DeepSeek. Set an override only when a "
+"model capability needs correction."
+msgstr "远程模型 ID 来自 DeepSeek。仅在模型能力需要修正时设置覆盖值。"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:137
+msgid "Remote model"
+msgstr "远程模型"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:137
+msgid "Input capability"
+msgstr "输入能力"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:142
+msgid "Plugin default"
+msgstr "插件默认值"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:142
+#: src/Admin/DeepSeekModelSettingsSection.php:147
+msgid "Text only"
+msgstr "仅文本"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:142
+#: src/Admin/DeepSeekModelSettingsSection.php:147
+msgid "Text + image"
+msgstr "文本 + 图片"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:146
+msgid "One experimental model ID"
+msgstr "一个实验模型 ID"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:147
+msgid "Experimental input capability"
+msgstr "实验模型输入能力"
+
+#: src/Admin/DeepSeekModelSettingsSection.php:149
+msgid "Save model settings"
+msgstr "保存模型设置"
 
 #: src/Admin/DeepSeekCostOverview.php:112
 msgid "DeepSeek usage overview"
@@ -165,77 +150,82 @@ msgstr "AI 请求日志不可用。请启用该功能以收集 DeepSeek 用量�
 msgid "DeepSeek usage metrics"
 msgstr "DeepSeek 用量指标"
 
-#: src/Admin/DeepSeekCostOverview.php:133
-#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekCostOverview.php:135
+#: src/Admin/DeepSeekCostOverview.php:167
 msgid "Estimated cost"
-msgstr ""
+msgstr "估算费用"
 
-#: src/Admin/DeepSeekCostOverview.php:133
+#: src/Admin/DeepSeekCostOverview.php:137
 msgid "Priced requests only"
 msgstr "仅统计已有价格的请求"
 
-#: src/Admin/DeepSeekCostOverview.php:134
-#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekCostOverview.php:140
+#: src/Admin/DeepSeekCostOverview.php:167
 msgid "Requests"
-msgstr ""
+msgstr "请求数"
 
-#: src/Admin/DeepSeekCostOverview.php:134
+#: src/Admin/DeepSeekCostOverview.php:142
 msgid "priced"
 msgstr "已计价"
 
-#: src/Admin/DeepSeekCostOverview.php:135
+#: src/Admin/DeepSeekCostOverview.php:145
 msgid "Total tokens"
 msgstr "Token 总数"
 
-#: src/Admin/DeepSeekCostOverview.php:135
+#: src/Admin/DeepSeekCostOverview.php:147
 msgid "cache hit"
 msgstr "缓存命中"
 
-#: src/Admin/DeepSeekCostOverview.php:136
+#: src/Admin/DeepSeekCostOverview.php:150
 msgid "Pricing coverage"
 msgstr "计价覆盖率"
 
-#: src/Admin/DeepSeekCostOverview.php:136
+#: src/Admin/DeepSeekCostOverview.php:152
 msgid "without a snapshot"
 msgstr "条没有价格快照"
 
-#: src/Admin/DeepSeekCostOverview.php:140
+#: src/Admin/DeepSeekCostOverview.php:158
 msgid ""
 "Some historical requests do not contain a DeepSeek pricing snapshot. They "
 "are excluded from estimated cost totals."
 msgstr "部分历史请求没有 DeepSeek 价格快照，因此不会计入估算费用总额。"
 
-#: src/Admin/DeepSeekCostOverview.php:145
+#: src/Admin/DeepSeekCostOverview.php:162 src/Admin/DeepSeekAdminPage.php:121
+msgid "View AI Request Logs"
+msgstr "查看 AI 请求日志"
+
+#: src/Admin/DeepSeekCostOverview.php:163
 msgid "Costs are estimates and may differ from the provider invoice."
 msgstr "费用仅为估算值，可能与提供商账单不同。"
 
-#: src/Admin/DeepSeekCostOverview.php:147
+#: src/Admin/DeepSeekCostOverview.php:165
 msgid "By model"
 msgstr "按模型统计"
 
-#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekCostOverview.php:167
 #: src/Admin/DeepSeekPricingSection.php:110
 msgid "Model"
 msgstr "模型"
 
-#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekCostOverview.php:167
 msgid "Tokens"
 msgstr "Token"
 
-#: src/Admin/DeepSeekCostOverview.php:149
+#: src/Admin/DeepSeekCostOverview.php:167
 msgid "Cache hit"
 msgstr "缓存命中率"
 
-#: src/Admin/DeepSeekCostOverview.php:152
+#: src/Admin/DeepSeekCostOverview.php:170
 msgid "No DeepSeek Chat Completions requests found for this period."
 msgstr "此时间范围内没有找到 DeepSeek Chat Completions 请求。"
 
-#: src/Admin/DeepSeekCostOverview.php:165
+#. translators: %d: Number of requests without a saved pricing snapshot.
+#: src/Admin/DeepSeekCostOverview.php:183
 #, php-format
 msgid "%d without pricing snapshot"
 msgstr "%d 条没有价格快照"
 
-#: src/Admin/DeepSeekCostOverview.php:200
+#: src/Admin/DeepSeekCostOverview.php:218
 msgid "Unknown model"
 msgstr "未知模型"
 
@@ -254,56 +244,6 @@ msgstr "最近 30 天"
 #: src/Admin/DeepSeekCostOverview.php:456
 msgid "All available logs"
 msgstr "所有可用日志"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:124
-msgid "Model management"
-msgstr "模型管理"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:125
-msgid ""
-"Refresh the remote list only when needed. Unknown models default to text "
-"input."
-msgstr "仅在需要时刷新远程列表。未知模型默认仅支持文本输入。"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:129
-msgid "Refresh model list"
-msgstr "刷新模型列表"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:134
-msgid "Remote model"
-msgstr "远程模型"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:134
-msgid "Input capability"
-msgstr "输入能力"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:139
-msgid "Plugin default"
-msgstr "插件默认值"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:139
-msgid "Text only"
-msgstr "仅文本"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:139
-msgid "Text + image"
-msgstr "文本 + 图片"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:142
-msgid "One experimental model ID"
-msgstr "一个实验模型 ID"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:143
-msgid "Experimental: text only"
-msgstr "实验模型：仅文本"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:143
-msgid "Experimental: text + image"
-msgstr "实验模型：文本 + 图片"
-
-#: src/Admin/DeepSeekModelSettingsSection.php:144
-msgid "Save model settings"
-msgstr "保存模型设置"
 
 #: src/Admin/DeepSeekPricingSection.php:40
 msgid "Permission denied."
@@ -324,6 +264,10 @@ msgstr "计价规则无效。"
 #: src/Admin/DeepSeekPricingSection.php:91
 msgid "Custom pricing rule saved."
 msgstr "自定义计价规则已保存。"
+
+#: src/Admin/DeepSeekPricingSection.php:107 src/Admin/DeepSeekAdminPage.php:98
+msgid "Pricing rules"
+msgstr "计价规则"
 
 #: src/Admin/DeepSeekPricingSection.php:108
 msgid ""
@@ -352,91 +296,158 @@ msgstr "自定义"
 msgid "Built-in"
 msgstr "内置"
 
+#: src/Admin/DeepSeekPricingSection.php:121 src/Admin/DeepSeekAdminPage.php:129
+msgid "Disabled"
+msgstr "已停用"
+
 #: src/Admin/DeepSeekPricingSection.php:123
 msgid "Disable"
 msgstr "停用"
 
-#: src/Admin/DeepSeekPricingSection.php:130
+#: src/Admin/DeepSeekPricingSection.php:131
 msgid "Add or replace a custom pricing rule"
 msgstr "添加或替换自定义计价规则"
 
-#: src/Admin/DeepSeekPricingSection.php:131
+#: src/Admin/DeepSeekPricingSection.php:133
 msgid ""
 "Use exact API model IDs separated by commas. Effective times and peak "
 "windows use UTC."
 msgstr "使用英文逗号分隔准确的 API 模型 ID。生效时间和高峰时段均使用 UTC。"
 
-#: src/Admin/DeepSeekPricingSection.php:135
+#: src/Admin/DeepSeekPricingSection.php:137
 msgid "Rule ID"
 msgstr "规则 ID"
 
-#: src/Admin/DeepSeekPricingSection.php:136
+#: src/Admin/DeepSeekPricingSection.php:138
 msgid "Label"
 msgstr "名称"
 
-#: src/Admin/DeepSeekPricingSection.php:137
+#: src/Admin/DeepSeekPricingSection.php:139
 msgid "Model IDs"
 msgstr "模型 ID"
 
-#: src/Admin/DeepSeekPricingSection.php:138
+#: src/Admin/DeepSeekPricingSection.php:140
 msgid "Effective from (UTC)"
 msgstr "生效时间（UTC）"
 
-#: src/Admin/DeepSeekPricingSection.php:140
+#: src/Admin/DeepSeekPricingSection.php:142
 msgid "Pricing mode"
 msgstr "计价模式"
 
-#: src/Admin/DeepSeekPricingSection.php:140
-#: src/Admin/DeepSeekPricingSection.php:141
+#: src/Admin/DeepSeekPricingSection.php:142
+#: src/Admin/DeepSeekPricingSection.php:143
 msgid "Flat rate"
 msgstr "统一价格"
 
-#: src/Admin/DeepSeekPricingSection.php:140
+#: src/Admin/DeepSeekPricingSection.php:142
 msgid "Off-peak and peak rates"
 msgstr "闲时和高峰价格"
-
-#: src/Admin/DeepSeekPricingSection.php:143
-#: src/Admin/DeepSeekPricingSection.php:149
-#: src/Admin/DeepSeekPricingSection.php:155
-msgid "Cache hit input"
-msgstr "缓存命中输入"
-
-#: src/Admin/DeepSeekPricingSection.php:144
-#: src/Admin/DeepSeekPricingSection.php:150
-#: src/Admin/DeepSeekPricingSection.php:156
-msgid "Cache miss input"
-msgstr "缓存未命中输入"
 
 #: src/Admin/DeepSeekPricingSection.php:145
 #: src/Admin/DeepSeekPricingSection.php:151
 #: src/Admin/DeepSeekPricingSection.php:157
+msgid "Cache hit input"
+msgstr "缓存命中输入"
+
+#: src/Admin/DeepSeekPricingSection.php:146
+#: src/Admin/DeepSeekPricingSection.php:152
+#: src/Admin/DeepSeekPricingSection.php:158
+msgid "Cache miss input"
+msgstr "缓存未命中输入"
+
+#: src/Admin/DeepSeekPricingSection.php:147
+#: src/Admin/DeepSeekPricingSection.php:153
+#: src/Admin/DeepSeekPricingSection.php:159
 msgid "Output"
 msgstr "输出"
 
-#: src/Admin/DeepSeekPricingSection.php:147
+#: src/Admin/DeepSeekPricingSection.php:149
 msgid "Off-peak rates"
 msgstr "闲时价格"
 
-#: src/Admin/DeepSeekPricingSection.php:153
+#: src/Admin/DeepSeekPricingSection.php:155
 msgid "Peak rates"
 msgstr "高峰价格"
 
-#: src/Admin/DeepSeekPricingSection.php:159
+#: src/Admin/DeepSeekPricingSection.php:161
 msgid "Peak weekdays"
 msgstr "高峰星期"
 
-#: src/Admin/DeepSeekPricingSection.php:159
+#: src/Admin/DeepSeekPricingSection.php:161
 msgid "ISO weekday numbers, Monday is 1."
 msgstr "ISO 星期编号，星期一为 1。"
 
-#: src/Admin/DeepSeekPricingSection.php:160
+#: src/Admin/DeepSeekPricingSection.php:162
 msgid "Peak windows (UTC)"
 msgstr "高峰时段（UTC）"
 
-#: src/Admin/DeepSeekPricingSection.php:161
+#: src/Admin/DeepSeekPricingSection.php:163
 msgid "Save custom pricing rule"
 msgstr "保存自定义计价规则"
+
+#: src/Admin/DeepSeekAdminPage.php:32 src/Admin/DeepSeekAdminPage.php:33
+#: src/Admin/DeepSeekAdminPage.php:78
+msgid "DeepSeek Connector"
+msgstr "DeepSeek Connector"
+
+#: src/Admin/DeepSeekAdminPage.php:79
+msgid ""
+"Manage DeepSeek request observability, account balance, and model "
+"capabilities."
+msgstr "管理 DeepSeek 请求观测、账户余额和模型能力。"
+
+#: src/Admin/DeepSeekAdminPage.php:83
+msgid "AI Request Logging"
+msgstr "AI 请求日志"
+
+#: src/Admin/DeepSeekAdminPage.php:92
+msgid "Account balance"
+msgstr "账户余额"
+
+#: src/Admin/DeepSeekAdminPage.php:93
+msgid "Balance is queried only after an explicit refresh."
+msgstr "仅在明确点击刷新后查询余额。"
+
+#: src/Admin/DeepSeekAdminPage.php:119
+msgid "Enabled"
+msgstr "已启用"
+
+#: src/Admin/DeepSeekAdminPage.php:119
+msgid "WordPress AI is recording requests for observability and debugging."
+msgstr "WordPress AI 正在记录请求，用于观测和调试。"
+
+#: src/Admin/DeepSeekAdminPage.php:129
+msgid ""
+"Enable the experimental AI Request Logging feature in WordPress AI settings "
+"to record requests."
+msgstr "请在 WordPress AI 设置中启用实验性 AI 请求日志功能，以记录请求。"
+
+#: src/Admin/DeepSeekAdminPage.php:131
+msgid "Open AI Settings"
+msgstr "打开 AI 设置"
+
+#: src/Admin/DeepSeekAdminPage.php:137
+msgid "WordPress AI unavailable"
+msgstr "WordPress AI 不可用"
+
+#: src/Admin/DeepSeekAdminPage.php:137
+msgid "Install and activate the WordPress AI plugin to use AI Request Logging."
+msgstr "请安装并启用 WordPress AI 插件以使用 AI 请求日志。"
+
+#: src/Admin/DeepSeekAdminPage.php:149
+msgid "DeepSeek connector tools are available here."
+msgstr "DeepSeek Connector 工具位于此处。"
+
+#: src/Admin/DeepSeekAdminPage.php:149
+msgid "Open DeepSeek Connector"
+msgstr "打开 DeepSeek Connector"
 
 #: src/Provider/DeepSeekProvider.php:94
 msgid "Text generation with DeepSeek AI models."
 msgstr "使用 DeepSeek AI 模型生成文本。"
+
+#~ msgid "Experimental: text only"
+#~ msgstr "实验模型：仅文本"
+
+#~ msgid "Experimental: text + image"
+#~ msgstr "实验模型：文本 + 图片"

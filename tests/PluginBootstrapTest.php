@@ -40,7 +40,7 @@ final class PluginBootstrapTest extends TestCase {
 		$contents = file_get_contents( self::MAIN_FILE );
 		$this->assertIsString( $contents );
 		$this->assertStringContainsString( 'Plugin Name:       AI Connector for DeepSeek Guducat.ver', $contents );
-		$this->assertStringContainsString( 'Version:           0.3.0', $contents );
+		$this->assertStringContainsString( 'Version:           3.1.0', $contents );
 		$this->assertStringContainsString( 'Requires at least: 7.0', $contents );
 		$this->assertStringContainsString( 'Requires PHP:      7.4', $contents );
 		$this->assertMatchesRegularExpression( '/^[ \t]*\*[ \t]*Author:[ \t]+Guducat \/ 孤独豹猫[ \t]*$/m', $contents );
@@ -113,7 +113,7 @@ PHP;
 	 * Verify constants, autoloading, and hook registration.
 	 */
 	public function test_bootstrap_defines_constants_loads_provider_and_registers_init_hook(): void {
-		$this->assertSame( '0.3.0', constant( 'DEEPSEEK_AI_PROVIDER_VERSION' ) );
+		$this->assertSame( '3.1.0', constant( 'DEEPSEEK_AI_PROVIDER_VERSION' ) );
 		$this->assertSame( dirname( realpath( self::MAIN_FILE ) ) . DIRECTORY_SEPARATOR, constant( 'DEEPSEEK_AI_PROVIDER_DIR' ) );
 		$this->assertTrue( class_exists( DeepSeekProvider::class ) );
 

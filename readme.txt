@@ -2,7 +2,7 @@
 Contributors: sajjad67
 Tags: ai, deepseek, artificial-intelligence, connector
 Requires at least: 7.0
-Stable tag: 0.3.0
+Stable tag: 3.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -64,6 +64,10 @@ Service provider: DeepSeek
 Based on the GPL-licensed AI Provider For DeepSeek 1.0.3, originally created by Sajjad Hossain Sagor. The original author's attribution and contribution are retained with thanks. Guducat / 孤独豹猫 is the current maintainer of this fork. The original project and this fork are distributed under GPL-2.0-or-later. See NOTICE.md and license.txt for details.
 
 == Changelog ==
+
+= 3.1.0 =
+
+* Polished the DeepSeek Connector administrator interface with compact usage metrics, clearer model settings, and a collapsible custom pricing form.
 
 = 0.3.0 =
 

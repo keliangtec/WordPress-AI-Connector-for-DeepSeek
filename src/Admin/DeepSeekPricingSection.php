@@ -127,8 +127,10 @@ final class DeepSeekPricingSection {
 			</tbody>
 		</table>
 
-		<h3><?php echo esc_html__( 'Add or replace a custom pricing rule', 'ai-connector-for-deepseek-guducat-ver' ); ?></h3>
-		<p><?php echo esc_html__( 'Use exact API model IDs separated by commas. Effective times and peak windows use UTC.', 'ai-connector-for-deepseek-guducat-ver' ); ?></p>
+		<details class="deepseek-connector-admin__pricing-details">
+			<summary><?php echo esc_html__( 'Add or replace a custom pricing rule', 'ai-connector-for-deepseek-guducat-ver' ); ?></summary>
+			<div class="deepseek-connector-admin__pricing-details-content">
+			<p class="description"><?php echo esc_html__( 'Use exact API model IDs separated by commas. Effective times and peak windows use UTC.', 'ai-connector-for-deepseek-guducat-ver' ); ?></p>
 		<form method="post" class="deepseek-connector-admin__pricing-form">
 			<?php wp_nonce_field( self::NONCE_ACTION ); ?>
 			<input type="hidden" name="<?php echo esc_attr( self::ACTION_FIELD ); ?>" value="save">
@@ -160,6 +162,8 @@ final class DeepSeekPricingSection {
 			<p><label><?php echo esc_html__( 'Peak windows (UTC)', 'ai-connector-for-deepseek-guducat-ver' ); ?><br><input class="regular-text" name="deepseek_pricing_windows" type="text" value="01:00-04:00,06:00-10:00"></label></p>
 			<?php submit_button( __( 'Save custom pricing rule', 'ai-connector-for-deepseek-guducat-ver' ), 'secondary', 'submit', false ); ?>
 		</form>
+			</div>
+		</details>
 		<?php
 	}
 

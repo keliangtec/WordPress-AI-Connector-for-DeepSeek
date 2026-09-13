@@ -129,12 +129,30 @@ final class DeepSeekCostOverview {
 			</div>
 			<?php return; ?>
 		<?php endif; ?>
-		<div class="deepseek-connector-admin__metric-grid" aria-label="<?php echo esc_attr__( 'DeepSeek usage metrics', 'ai-connector-for-deepseek-guducat-ver' ); ?>">
-			<?php $this->render_metric( __( 'Estimated cost', 'ai-connector-for-deepseek-guducat-ver' ), $this->format_costs( $summary['estimated_costs'] ?? array() ), __( 'Priced requests only', 'ai-connector-for-deepseek-guducat-ver' ) ); ?>
-			<?php $this->render_metric( __( 'Requests', 'ai-connector-for-deepseek-guducat-ver' ), number_format_i18n( (int) ( $summary['total_requests'] ?? 0 ) ), sprintf( '%s %s', number_format_i18n( (int) ( $summary['priced_requests'] ?? 0 ) ), esc_html__( 'priced', 'ai-connector-for-deepseek-guducat-ver' ) ) ); ?>
-			<?php $this->render_metric( __( 'Total tokens', 'ai-connector-for-deepseek-guducat-ver' ), number_format_i18n( (int) ( $summary['total_tokens'] ?? 0 ) ), sprintf( '%s %s', number_format_i18n( (int) ( $summary['cache_hit_tokens'] ?? 0 ) ), esc_html__( 'cache hit', 'ai-connector-for-deepseek-guducat-ver' ) ) ); ?>
-			<?php $this->render_metric( __( 'Pricing coverage', 'ai-connector-for-deepseek-guducat-ver' ), $this->format_percentage( (float) ( $summary['pricing_coverage'] ?? 0 ) ), sprintf( '%s %s', number_format_i18n( (int) ( $summary['unpriced_requests'] ?? 0 ) ), esc_html__( 'without a snapshot', 'ai-connector-for-deepseek-guducat-ver' ) ) ); ?>
-		</div>
+		<table class="widefat striped deepseek-connector-admin__metrics-table" aria-label="<?php echo esc_attr__( 'DeepSeek usage metrics', 'ai-connector-for-deepseek-guducat-ver' ); ?>">
+			<tbody>
+			<tr>
+				<th scope="row"><?php echo esc_html__( 'Estimated cost', 'ai-connector-for-deepseek-guducat-ver' ); ?></th>
+				<td><strong><?php echo esc_html( $this->format_costs( $summary['estimated_costs'] ?? array() ) ); ?></strong></td>
+				<td><?php echo esc_html__( 'Priced requests only', 'ai-connector-for-deepseek-guducat-ver' ); ?></td>
+			</tr>
+			<tr>
+				<th scope="row"><?php echo esc_html__( 'Requests', 'ai-connector-for-deepseek-guducat-ver' ); ?></th>
+				<td><strong><?php echo esc_html( number_format_i18n( (int) ( $summary['total_requests'] ?? 0 ) ) ); ?></strong></td>
+				<td><?php echo esc_html( sprintf( '%s %s', number_format_i18n( (int) ( $summary['priced_requests'] ?? 0 ) ), __( 'priced', 'ai-connector-for-deepseek-guducat-ver' ) ) ); ?></td>
+			</tr>
+			<tr>
+				<th scope="row"><?php echo esc_html__( 'Total tokens', 'ai-connector-for-deepseek-guducat-ver' ); ?></th>
+				<td><strong><?php echo esc_html( number_format_i18n( (int) ( $summary['total_tokens'] ?? 0 ) ) ); ?></strong></td>
+				<td><?php echo esc_html( sprintf( '%s %s', number_format_i18n( (int) ( $summary['cache_hit_tokens'] ?? 0 ) ), __( 'cache hit', 'ai-connector-for-deepseek-guducat-ver' ) ) ); ?></td>
+			</tr>
+			<tr>
+				<th scope="row"><?php echo esc_html__( 'Pricing coverage', 'ai-connector-for-deepseek-guducat-ver' ); ?></th>
+				<td><strong><?php echo esc_html( $this->format_percentage( (float) ( $summary['pricing_coverage'] ?? 0 ) ) ); ?></strong></td>
+				<td><?php echo esc_html( sprintf( '%s %s', number_format_i18n( (int) ( $summary['unpriced_requests'] ?? 0 ) ), __( 'without a snapshot', 'ai-connector-for-deepseek-guducat-ver' ) ) ); ?></td>
+			</tr>
+			</tbody>
+		</table>
 		<?php if ( ! empty( $summary['unpriced_requests'] ) ) : ?>
 			<div class="notice notice-warning inline deepseek-connector-admin__coverage-notice">
 				<p><?php echo esc_html__( 'Some historical requests do not contain a DeepSeek pricing snapshot. They are excluded from estimated cost totals.', 'ai-connector-for-deepseek-guducat-ver' ); ?></p>
@@ -412,24 +430,6 @@ final class DeepSeekCostOverview {
 			$formatted[] = sprintf( '%s %s', $currency, number_format_i18n( (float) $amount, 8 ) );
 		}
 		return implode( ', ', $formatted );
-	}
-
-	/**
-	 * Render one metric tile.
-	 *
-	 * @param string $label   Metric label.
-	 * @param string $value   Metric value.
-	 * @param string $caption Supporting caption.
-	 * @return void
-	 */
-	private function render_metric( string $label, string $value, string $caption ): void {
-		?>
-		<div class="deepseek-connector-admin__metric">
-			<span class="deepseek-connector-admin__metric-label"><?php echo esc_html( $label ); ?></span>
-			<strong class="deepseek-connector-admin__metric-value"><?php echo esc_html( $value ); ?></strong>
-			<span class="deepseek-connector-admin__metric-caption"><?php echo esc_html( $caption ); ?></span>
-		</div>
-		<?php
 	}
 
 	/**

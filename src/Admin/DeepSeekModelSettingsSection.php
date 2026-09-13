@@ -123,15 +123,18 @@ final class DeepSeekModelSettingsSection {
 		?>
 		<h2><?php echo esc_html__( 'Model management', 'ai-connector-for-deepseek-guducat-ver' ); ?></h2>
 		<p><?php echo esc_html__( 'Refresh the remote list only when needed. Unknown models default to text input.', 'ai-connector-for-deepseek-guducat-ver' ); ?></p>
-		<form method="post">
+		<div class="deepseek-connector-admin__model-toolbar">
+		<form method="post" class="deepseek-connector-admin__model-refresh">
 			<?php wp_nonce_field( self::NONCE_REFRESH ); ?>
 			<input type="hidden" name="<?php echo esc_attr( self::ACTION_FIELD ); ?>" value="refresh">
 			<?php submit_button( __( 'Refresh model list', 'ai-connector-for-deepseek-guducat-ver' ), 'secondary', 'submit', false ); ?>
 		</form>
+		<span class="description"><?php echo esc_html__( 'Remote model IDs are discovered from DeepSeek. Set an override only when a model capability needs correction.', 'ai-connector-for-deepseek-guducat-ver' ); ?></span>
+		</div>
 		<form method="post">
 			<?php wp_nonce_field( self::NONCE_SAVE ); ?>
 			<input type="hidden" name="<?php echo esc_attr( self::ACTION_FIELD ); ?>" value="save">
-			<table class="widefat striped"><thead><tr><th><?php echo esc_html__( 'Remote model', 'ai-connector-for-deepseek-guducat-ver' ); ?></th><th><?php echo esc_html__( 'Input capability', 'ai-connector-for-deepseek-guducat-ver' ); ?></th></tr></thead><tbody>
+			<table class="widefat striped deepseek-connector-admin__model-table"><thead><tr><th><?php echo esc_html__( 'Remote model', 'ai-connector-for-deepseek-guducat-ver' ); ?></th><th><?php echo esc_html__( 'Input capability', 'ai-connector-for-deepseek-guducat-ver' ); ?></th></tr></thead><tbody>
 			<?php
 			foreach ( $settings['remote_models'] as $model_id ) :
 				$selected = $settings['overrides'][ $model_id ] ?? 'default';
@@ -139,8 +142,10 @@ final class DeepSeekModelSettingsSection {
 				<tr><td><?php echo esc_html( $model_id ); ?></td><td><select name="deepseek_model_override[<?php echo esc_attr( $model_id ); ?>]"><option value="default" <?php selected( 'default', $selected ); ?>><?php echo esc_html__( 'Plugin default', 'ai-connector-for-deepseek-guducat-ver' ); ?></option><option value="text" <?php selected( 'text', $selected ); ?>><?php echo esc_html__( 'Text only', 'ai-connector-for-deepseek-guducat-ver' ); ?></option><option value="text_image" <?php selected( 'text_image', $selected ); ?>><?php echo esc_html__( 'Text + image', 'ai-connector-for-deepseek-guducat-ver' ); ?></option></select></td></tr>
 			<?php endforeach; ?>
 			</tbody></table>
-			<p><label for="deepseek-experimental-id"><?php echo esc_html__( 'One experimental model ID', 'ai-connector-for-deepseek-guducat-ver' ); ?></label><br><input id="deepseek-experimental-id" type="text" class="regular-text" name="deepseek_experimental_id" value="<?php echo esc_attr( $settings['experimental_model']['id'] ); ?>"></p>
-			<p><select name="deepseek_experimental_mode"><option value="text" <?php selected( 'text', $settings['experimental_model']['input_mode'] ); ?>><?php echo esc_html__( 'Experimental: text only', 'ai-connector-for-deepseek-guducat-ver' ); ?></option><option value="text_image" <?php selected( 'text_image', $settings['experimental_model']['input_mode'] ); ?>><?php echo esc_html__( 'Experimental: text + image', 'ai-connector-for-deepseek-guducat-ver' ); ?></option></select></p>
+			<div class="deepseek-connector-admin__experimental-fields">
+				<p><label for="deepseek-experimental-id"><?php echo esc_html__( 'One experimental model ID', 'ai-connector-for-deepseek-guducat-ver' ); ?></label><br><input id="deepseek-experimental-id" type="text" class="regular-text" name="deepseek_experimental_id" value="<?php echo esc_attr( $settings['experimental_model']['id'] ); ?>"></p>
+				<p><label for="deepseek-experimental-mode"><?php echo esc_html__( 'Experimental input capability', 'ai-connector-for-deepseek-guducat-ver' ); ?></label><br><select id="deepseek-experimental-mode" name="deepseek_experimental_mode"><option value="text" <?php selected( 'text', $settings['experimental_model']['input_mode'] ); ?>><?php echo esc_html__( 'Text only', 'ai-connector-for-deepseek-guducat-ver' ); ?></option><option value="text_image" <?php selected( 'text_image', $settings['experimental_model']['input_mode'] ); ?>><?php echo esc_html__( 'Text + image', 'ai-connector-for-deepseek-guducat-ver' ); ?></option></select></p>
+			</div>
 			<?php submit_button( __( 'Save model settings', 'ai-connector-for-deepseek-guducat-ver' ), 'primary', 'submit', false ); ?>
 		</form>
 		<?php
